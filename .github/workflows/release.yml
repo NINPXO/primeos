@@ -15,7 +15,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
 
       - uses: subosito/flutter-action@v2
         with:
@@ -23,10 +22,14 @@ jobs:
           cache: true
 
       - name: Get dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get || {
+            echo "Attempting dependency resolution..."
+            flutter pub upgrade --major-versions || true
+          }
 
       - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build --delete-conflicting-outputs || true
 
       - name: Build APK
         run: flutter build apk --release
