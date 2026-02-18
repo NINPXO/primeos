@@ -29,7 +29,8 @@
       "Bash(cat:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "Bash(/tmp/file_summary.txt:*)"
+      "Bash(/tmp/file_summary.txt:*)",
+      "Bash(gh repo create:*)"
     ]
   }
 }
