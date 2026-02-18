@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  repository-projects: read
 
 jobs:
   build_apk:
@@ -50,7 +51,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
-          generate_release_notes: true
           draft: false
           fail_on_unmatched_files: false
         env:
