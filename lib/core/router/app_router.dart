@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../shared/widgets/app_scaffold.dart';
+import '../../features/search/presentation/screens/global_search_screen.dart';
 
 // Placeholder screens
 class DashboardScreen extends StatelessWidget {
@@ -45,15 +46,6 @@ class NotesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(child: Text('Notes'));
-  }
-}
-
-class GlobalSearchScreen extends StatelessWidget {
-  const GlobalSearchScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Global Search'));
   }
 }
 
@@ -141,7 +133,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/search',
       name: 'search',
-      builder: (context, state) => const GlobalSearchScreen(),
+      pageBuilder: (context, state) => MaterialPage(
+        fullscreenDialog: true,
+        child: const GlobalSearchScreen(),
+      ),
     ),
     GoRoute(
       path: '/trash',
