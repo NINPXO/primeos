@@ -32,7 +32,10 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs || true
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          set -o pipefail
+          flutter build apk --release 2>&1 | tee build_output.log
+          tail -100 build_output.log
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
