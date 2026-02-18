@@ -88,10 +88,22 @@ lib/
 - `lib/core/database/database_helper.dart` (41 lines) - Transaction/query helpers
 - `lib/core/providers/database_provider.dart` (13 lines) - Riverpod FutureProvider
 
+## Context Management Setup
+- **Module-Level .claude.md Files**: 9 files created for future development
+  - Root `.claude.md` (project overview, critical files, decisions)
+  - `lib/core/.claude.md` (database, router, services)
+  - `lib/features/.claude.md` (architecture pattern, workflow)
+  - Module-specific: goals, progress, notes, search, settings, shared
+  - Each file includes checklists, common tasks, patterns, mistakes
+  - ~3,500 lines of development guidance for future modifications
+- **Latest Commit**: c95b268 (Context layer added)
+- **Purpose**: Enable efficient future development without losing architectural context
+
 ## Resumption Notes
 - If interrupted, check git log for last commit
 - Verify MEMORY.md updated with current phase status
 - Check task list (#1-12) for completion status
-- Phase 2 depends on Phase 1 being correct - all 9 tables must exist with proper schema
-- Phase 3+ feature modules depend on Phase 2 (routing, CSV services) being complete
+- Read module `.claude.md` when modifying that feature (quick reference!)
+- Start with root `.claude.md` for project overview and critical files
+- Each module has step-by-step guides for common tasks (add field, add setting, etc.)
 
