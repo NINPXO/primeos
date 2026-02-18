@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../features/search/presentation/screens/global_search_screen.dart';
+import '../../settings/presentation/screens/settings_screen.dart';
 
 // Placeholder screens
 class DashboardScreen extends StatelessWidget {
@@ -55,15 +56,6 @@ class TrashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(child: Text('Trash'));
-  }
-}
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Settings'));
   }
 }
 
