@@ -31,7 +31,21 @@
       "Bash(find:*)",
       "Bash(/tmp/file_summary.txt:*)",
       "Bash(gh repo create:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/core/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/features/goals/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/features/progress/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/features/notes/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/shared/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/settings/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/lib/features/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/CONTEXT_FILES.md:*)",
+      "Bash(emulator:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh release:*)"
     ]
   }
 }
