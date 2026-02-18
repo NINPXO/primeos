@@ -20,7 +20,12 @@ jobs:
           cache: true
 
       - name: Get dependencies
-        run: flutter pub get
+        run: |
+          set -x
+          flutter pub get 2>&1 || {
+            echo "⚠ Dependency resolution failed. Trying with no offline cache..."
+            flutter pub get --no-offline 2>&1
+          }
 
       - name: Generate code
         run: dart run build_runner build --delete-conflicting-outputs
