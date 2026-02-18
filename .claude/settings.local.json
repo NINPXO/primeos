@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Task",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"dir C:\\\\ClodueSpace\\\\PrimeOS /a\")",
+      "Bash(cmd /c \"dir C:\\\\ClodueSpace\\\\PrimeOS /a 2>&1\")",
+      "Bash(cmd /c dir \"C:\\\\ClodueSpace\\\\PrimeOS\" /a)",
+      "Bash(powershell -Command \"Get-ChildItem -Path ''C:\\\\ClodueSpace\\\\PrimeOS'' -Force | Select-Object Name, Mode, Length, LastWriteTime\")",
+      "Bash(powershell -Command:*)",
+      "Bash(git init:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/.claude.md:*)",
+      "Bash(/c/ClodueSpace/PrimeOS/.gitignore:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(flutter create:*)",
+      "Bash(echo:*)",
+      "Bash(git -C /c/ClodueSpace/PrimeOS log --oneline)",
+      "Bash(flutter --version:*)",
+      "Bash(test:*)",
+      "Bash(dart --version:*)",
+      "Bash(ls -la \"C:\\\\ClodueSpace\\\\PrimeOS\\\\lib\\\\core\"\" 2>&1 || echo \"Directory does not exist \")",
+      "Bash(flutter analyze:*)",
+      "Bash(dart analyze:*)",
+      "Bash(wc:*)",
+      "Bash(flutter pub get:*)"
+    ]
+  }
+}
