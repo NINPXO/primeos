@@ -41,6 +41,8 @@ jobs:
           if flutter build apk --release 2>&1 | tee build_output.log; then
             echo "apk_built=true" >> $GITHUB_OUTPUT
             echo "✓ APK build succeeded"
+            echo "Looking for APK files..."
+            find . -name "*.apk" -type f 2>/dev/null | head -20
           else
             echo "apk_built=false" >> $GITHUB_OUTPUT
             echo "✗ APK build failed - will create release with code only"
@@ -50,7 +52,9 @@ jobs:
       - name: Create GitHub Release with APK
         uses: softprops/action-gh-release@v2
         with:
-          files: build/app/outputs/flutter-apk/app-release.apk
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/apk/release/app-release.apk
           draft: false
           fail_on_unmatched_files: false
         env:
