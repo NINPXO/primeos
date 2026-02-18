@@ -24,7 +24,8 @@
       "Bash(dart analyze:*)",
       "Bash(wc:*)",
       "Bash(flutter pub get:*)",
-      "Bash(bash --version)"
+      "Bash(bash --version)",
+      "Bash(ls -la \"C:\\\\ClodueSpace\\\\PrimeOS\\\\lib\\\\features\\\\progress\\\\domain\"\" 2>/dev/null || echo \"Directory check \")"
     ]
   }
 }
