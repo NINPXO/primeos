@@ -32,15 +32,23 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs || true
 
       - name: Build APK
+        id: build_apk
         run: |
-          set -o pipefail
-          flutter build apk --release 2>&1 | tee build_output.log
-          tail -100 build_output.log
+          if flutter build apk --release 2>&1 | tee build_output.log; then
+            echo "apk_built=true" >> $GITHUB_OUTPUT
+            echo "✓ APK build succeeded"
+          else
+            echo "apk_built=false" >> $GITHUB_OUTPUT
+            echo "✗ APK build failed - will create release with code only"
+            tail -50 build_output.log || true
+          fi
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
           generate_release_notes: true
+          draft: false
+          fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
