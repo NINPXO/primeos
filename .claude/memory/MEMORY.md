@@ -3,7 +3,8 @@
 ## Current Status
 - **Phase**: 11 (QA & Polish) COMPLETE ✅
 - **Project Status**: 🎉 **FULLY COMPLETE** - All 11 phases finished
-- **Last Update**: Session 2, Feb 18, 2026 - 100% complete
+- **Last Update**: Session 3, Feb 18, 2026 - GitHub Actions & APK Build Issue
+- **GitHub Actions**: CI ✅ | Deploy Web ✅ | Release workflow created (APK build failing)
 - **Final Commits**:
   - 197f59d: Phase 11 QA & Polish (6 files, 751 lines)
   - 83513f0: Phase 10 Settings & Theme (10 files, 693 lines)
@@ -99,6 +100,44 @@ lib/
 - **Latest Commit**: c95b268 (Context layer added)
 - **Purpose**: Enable efficient future development without losing architectural context
 
+## Session 3: GitHub Actions Setup (Feb 18, 2026)
+
+### Completed
+- ✅ Fixed Deploy Web workflow: configured GitHub Pages to use GitHub Actions as source
+- ✅ Fixed Release workflow: removed `generate_release_notes: true` (permission issue)
+- ✅ CI workflow: restored to stable state with fallback dependency resolution
+- ✅ Created 3 workflows: CI, Deploy Web, Release
+- ✅ GitHub Pages deployed (shows placeholder due to sqflite web incompatibility - expected)
+
+### Current Issue: APK Build Failing in GitHub Actions
+**Error Message**:
+```
+5 packages have newer versions incompatible with dependency constraints.
+[!] Your app is using an unsupported Gradle project.
+Error: Process completed with exit code 1.
+```
+
+**Root Cause**: Gradle project structure is unsupported / outdated
+
+**Recent Fixes Attempted**:
+1. Added `flutter clean` before APK build
+2. Added `flutter pub get` after clean
+3. Added `--verbose` flag to build command for better error output
+4. Latest tag: v1.2.0 (workflow updated but not yet run)
+
+**Next Steps to Resume**:
+1. Check v1.2.0 release workflow output to see actual Gradle error
+2. Options:
+   - Update incompatible packages in pubspec.yaml
+   - Regenerate Android build files (gradle wrapper, build.gradle)
+   - Create fresh Flutter project and migrate code (if structural corruption)
+3. Test APK build locally first before GH Actions
+
+**Commits This Session**:
+- 30389b6: Make APK build optional
+- e163caf: Add flutter clean + verbose APK build (latest)
+- Plus 6 other workflow adjustments
+
 ## Resumption Notes
 - If interrupted, check git log for last commit
 - Verify MEMORY.md updated with current phase status
@@ -106,4 +145,5 @@ lib/
 - Read module `.claude.md` when modifying that feature (quick reference!)
 - Start with root `.claude.md` for project overview and critical files
 - Each module has step-by-step guides for common tasks (add field, add setting, etc.)
+- **For APK issue**: Check v1.2.0 release logs first, then investigate pubspec.yaml/Gradle
 
