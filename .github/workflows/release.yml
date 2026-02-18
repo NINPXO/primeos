@@ -56,19 +56,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare APK for Packages
-        if: steps.build_apk.outputs.apk_built == 'true'
-        run: |
-          mkdir -p release-packages
-          cp build/app/outputs/flutter-apk/app-release.apk release-packages/primeos-${{ github.ref_name }}.apk
-          echo "APK ready for package upload:"
-          ls -lh release-packages/
-
-      - name: Upload APK to Packages (Artifacts)
+      - name: Upload APK to Packages
         if: steps.build_apk.outputs.apk_built == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: primeos-${{ github.ref_name }}
-          path: release-packages/primeos-${{ github.ref_name }}.apk
+          name: primeos-apk-${{ github.ref_name }}
+          path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 90
-          if-no-files-found: warn
