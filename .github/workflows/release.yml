@@ -36,27 +36,24 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs || true
 
       - name: Build APK
-        id: build_apk
-        run: |
-          if flutter build apk --release 2>&1 | tee build_output.log; then
-            echo "apk_built=true" >> $GITHUB_OUTPUT
-            echo "✓ APK build succeeded"
-            echo "Looking for APK files..."
-            find . -name "*.apk" -type f 2>/dev/null | head -20
-          else
-            echo "apk_built=false" >> $GITHUB_OUTPUT
-            echo "✗ APK build failed - will create release with code only"
-            tail -50 build_output.log || true
-          fi
+        run: flutter build apk --release
 
-      - name: List all APK files
-        run: find . -name "*.apk" -type f 2>/dev/null || echo "No APK files found"
+      - name: Verify APK exists
+        run: |
+          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "✓ APK file found"
+            ls -lh build/app/outputs/flutter-apk/app-release.apk
+          else
+            echo "✗ APK file not found at expected location"
+            echo "Searching for APK files..."
+            find build -name "*.apk" -type f
+            exit 1
+          fi
 
       - name: Create GitHub Release with APK
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
           draft: false
-          fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
