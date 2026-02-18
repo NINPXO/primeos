@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  packages: write
   repository-projects: read
 
 jobs:
@@ -55,3 +56,11 @@ jobs:
           fail_on_unmatched_files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload APK to Packages
+        if: steps.build_apk.outputs.apk_built == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: primeos-apk-${{ github.ref_name }}
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
