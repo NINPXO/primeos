@@ -23,26 +23,26 @@
     <router-outlet></router-outlet>
   </div>
 
-  <mat-bottom-navigation #bottomNav="matBottomNavigation" class="app-bottom-nav">
-    <button mat-tab-label routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <nav class="app-bottom-nav">
+    <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <mat-icon>dashboard</mat-icon>
       <span>Dashboard</span>
     </button>
-    <button mat-tab-label routerLink="/goals" routerLinkActive="active">
+    <button mat-button routerLink="/goals" routerLinkActive="active">
       <mat-icon>target</mat-icon>
       <span>Goals</span>
     </button>
-    <button mat-tab-label routerLink="/progress" routerLinkActive="active">
+    <button mat-button routerLink="/progress" routerLinkActive="active">
       <mat-icon>trending_up</mat-icon>
       <span>Progress</span>
     </button>
-    <button mat-tab-label routerLink="/daily-log" routerLinkActive="active">
+    <button mat-button routerLink="/daily-log" routerLinkActive="active">
       <mat-icon>today</mat-icon>
       <span>Daily Log</span>
     </button>
-    <button mat-tab-label routerLink="/notes" routerLinkActive="active">
+    <button mat-button routerLink="/notes" routerLinkActive="active">
       <mat-icon>note</mat-icon>
       <span>Notes</span>
     </button>
-  </mat-bottom-navigation>
+  </nav>
 </div>

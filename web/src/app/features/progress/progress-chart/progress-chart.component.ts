@@ -19,7 +19,7 @@ export class ProgressChartComponent implements OnInit {
   private progressService = inject(ProgressService);
   private goalsService = inject(GoalsService);
   private dialogRef = inject(MatDialogRef<ProgressChartComponent>);
-  @Inject(MAT_DIALOG_DATA) goalId: string;
+  @Inject(MAT_DIALOG_DATA) goalId!: string;
 
   goal: Goal | null = null;
   progressEntries: ProgressEntry[] = [];

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatBottomNavigationModule } from '@angular/material/bottom-nav';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { SettingsService } from '../../../core/services/settings.service';
 
 @Component({
@@ -15,10 +16,11 @@ import { SettingsService } from '../../../core/services/settings.service';
     CommonModule,
     RouterModule,
     MatToolbarModule,
-    MatBottomNavigationModule,
+    MatTabsModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   templateUrl: './app-shell.component.html',
   styleUrls: ['./app-shell.component.scss']

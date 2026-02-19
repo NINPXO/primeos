@@ -48,7 +48,7 @@ export class NotesService {
    * Get tags as observable
    */
   getTags$(): Observable<Tag[]> {
-    return this.tags$.asObservable();
+    return this.tags$;
   }
 
   /**
@@ -63,10 +63,8 @@ export class NotesService {
    */
   async loadNotes(options?: NoteFilterOptions): Promise<NoteWithTags[]> {
     try {
-      let notes = await this.db.notes
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      let allNotes = await this.db.notes.toArray();
+      let notes = allNotes.filter(n => !n.isDeleted);
 
       // Filter archived if requested
       if (options?.excludeArchived !== false) {
@@ -113,7 +111,7 @@ export class NotesService {
    * Get notes as observable
    */
   getNotes$(): Observable<NoteWithTags[]> {
-    return this.notes$.asObservable();
+    return this.notes$;
   }
 
   /**

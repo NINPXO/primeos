@@ -24,7 +24,7 @@
     "dexie": "4.0.8",
     "jszip": "3.10.1",
     "ng2-charts": "4.1.1",
-    "ngx-quill": "23.1.0",
+    "ngx-quill": "25.2.0",
     "papaparse": "5.4.1",
     "quill": "2.0.0",
     "rxjs": "7.8.1",

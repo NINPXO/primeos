@@ -34,10 +34,8 @@ export class DailyLogService {
    */
   async loadCategories(): Promise<LogCategory[]> {
     try {
-      const categories = await this.db.logCategories
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allCategories = await this.db.logCategories.toArray();
+      const categories = allCategories.filter(c => !c.isDeleted);
       this.categoriesSubject.next(categories);
       return categories;
     } catch (error) {

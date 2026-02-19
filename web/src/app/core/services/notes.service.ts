@@ -17,10 +17,8 @@ export class NotesService {
 
   async loadNotes(): Promise<void> {
     try {
-      const notes = await db.notes
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allNotes = await db.notes.toArray();
+      const notes = allNotes.filter(n => !n.isDeleted);
       notes.sort((a: Note, b: Note) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       this.notes$.next(notes);
     } catch (error) {
@@ -30,10 +28,8 @@ export class NotesService {
 
   async loadTags(): Promise<void> {
     try {
-      const tags = await db.noteTags
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allTags = await db.noteTags.toArray();
+      const tags = allTags.filter(t => !t.isDeleted);
       this.tags$.next(tags);
     } catch (error) {
       console.error('Error loading tags:', error);
@@ -41,11 +37,11 @@ export class NotesService {
   }
 
   getNotes(): Observable<Note[]> {
-    return this.notes$.asObservable();
+    return this.notes$ as Observable<Note[]>;
   }
 
   getTags(): Observable<NoteTag[]> {
-    return this.tags$.asObservable();
+    return this.tags$ as Observable<NoteTag[]>;
   }
 
   async addNote(note: Omit<Note, 'id' | 'createdAt' | 'updatedAt' | 'isDeleted'>): Promise<Note> {
@@ -82,7 +78,10 @@ export class NotesService {
       ...updates,
       updatedAt: new Date().toISOString()
     };
-    await db.notes.update(id, updated);
+    await db.notes.update(id, {
+      ...updates,
+      updatedAt: new Date().toISOString()
+    });
 
     // Update tag associations if tags changed
     if (updates.tags) {

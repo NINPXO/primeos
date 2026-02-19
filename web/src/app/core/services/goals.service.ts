@@ -34,10 +34,8 @@ export class GoalsService {
 
   async loadGoals(): Promise<void> {
     try {
-      const goals = await db.goals
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allGoals = await db.goals.toArray();
+      const goals = allGoals.filter(g => !g.isDeleted);
       this.goals$.next(goals);
     } catch (error) {
       console.error('Error loading goals:', error);

@@ -15,12 +15,10 @@ export class ProgressService {
 
   async loadProgress(): Promise<void> {
     try {
-      const entries = await db.progressEntries
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allEntries = await db.progressEntries.toArray();
+      const entries = allEntries.filter(e => !e.isDeleted);
       // Sort by date descending
-      entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.loggedDate).getTime() - new Date(a.loggedDate).getTime());
+      entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.date).getTime() - new Date(a.date).getTime());
       this.entries$.next(entries);
     } catch (error) {
       console.error('Error loading progress entries:', error);
@@ -38,7 +36,7 @@ export class ProgressService {
         .equals(goalId)
         .filter((e: ProgressEntry) => !e.isDeleted)
         .toArray();
-      return entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.loggedDate).getTime() - new Date(a.loggedDate).getTime());
+      return entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.date).getTime() - new Date(a.date).getTime());
     } catch (error) {
       console.error('Error loading progress for goal:', error);
       return [];

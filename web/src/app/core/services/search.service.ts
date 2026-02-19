@@ -16,10 +16,8 @@ export class SearchService {
 
     try {
       // Search goals
-      const goals = await db.goals
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allGoals = await db.goals.toArray();
+      const goals = allGoals.filter(g => !g.isDeleted);
 
       goals.forEach((goal: Goal) => {
         if (
@@ -38,10 +36,8 @@ export class SearchService {
       });
 
       // Search progress entries
-      const progressEntries = await db.progressEntries
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allProgressEntries = await db.progressEntries.toArray();
+      const progressEntries = allProgressEntries.filter(e => !e.isDeleted);
 
       progressEntries.forEach((entry: ProgressEntry) => {
         if (entry.note?.toLowerCase().includes(lowerQuery)) {
@@ -57,10 +53,8 @@ export class SearchService {
       });
 
       // Search daily logs
-      const logEntries = await db.dailyLogEntries
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allLogEntries = await db.dailyLogEntries.toArray();
+      const logEntries = allLogEntries.filter(e => !e.isDeleted);
 
       logEntries.forEach(entry => {
         if (entry.note?.toLowerCase().includes(lowerQuery)) {
@@ -76,10 +70,8 @@ export class SearchService {
       });
 
       // Search notes
-      const notes = await db.notes
-        .where('isDeleted')
-        .equals(false)
-        .toArray();
+      const allNotes = await db.notes.toArray();
+      const notes = allNotes.filter(n => !n.isDeleted);
 
       notes.forEach(note => {
         if (note.title.toLowerCase().includes(lowerQuery)) {

@@ -46,7 +46,7 @@
     <mat-chip-set>
       <mat-chip
         *ngFor="let tag of allTags"
-        [selected]="isTagSelected(tag.id)"
+        [highlighted]="isTagSelected(tag.id)"
         (click)="toggleTag(tag.id)"
       >
         {{ tag.name }}

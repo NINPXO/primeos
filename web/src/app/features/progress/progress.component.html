@@ -35,10 +35,10 @@
       <p>No progress entries yet. Start logging your progress!</p>
     </div>
 
-    <div *ngFor="let [date, entries] of getGroupedEntries()" class="date-group">
-      <h3 class="date-header">{{ date }}</h3>
+    <div *ngFor="let item of getGroupedEntries()" class="date-group">
+      <h3 class="date-header">{{ item[0] }}</h3>
 
-      <mat-card *ngFor="let entry of entries" class="entry-card">
+      <mat-card *ngFor="let entry of item[1]" class="entry-card">
         <mat-card-content>
           <div class="entry-info">
             <div class="entry-goal">

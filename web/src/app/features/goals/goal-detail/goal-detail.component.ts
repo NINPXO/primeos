@@ -34,7 +34,7 @@ export class GoalDetailComponent implements OnInit {
   private progressService = inject(ProgressService);
   private dialog = inject(MatDialog);
   private dialogRef = inject(MatDialogRef<GoalDetailComponent>);
-  @Inject(MAT_DIALOG_DATA) goal: Goal;
+  @Inject(MAT_DIALOG_DATA) goal!: Goal;
 
   progressEntries: ProgressEntry[] = [];
 

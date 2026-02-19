@@ -146,7 +146,7 @@ export class DailyLogComponent implements OnInit {
   /**
    * Delete entry
    */
-  async deleteEntry(entry: LogEntryWithCategory): void {
+  async deleteEntry(entry: LogEntryWithCategory): Promise<void> {
     if (confirm('Are you sure you want to delete this entry?')) {
       try {
         await this.dailyLogService.deleteEntry(entry.id);

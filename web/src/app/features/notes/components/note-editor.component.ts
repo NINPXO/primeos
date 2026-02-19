@@ -127,8 +127,10 @@ export class NoteEditorComponent implements OnInit {
   /**
    * Handle editor content change
    */
-  onEditorChange(delta: QuillDelta): void {
-    this.form.richContent = delta;
+  onEditorChange(event: any): void {
+    if (event && event.delta) {
+      this.form.richContent = event.delta;
+    }
   }
 
   /**
