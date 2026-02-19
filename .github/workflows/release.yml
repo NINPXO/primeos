@@ -74,15 +74,25 @@ jobs:
           echo "=== Full outputs directory structure ==="
           find build/app/outputs -type f 2>/dev/null | head -20 || echo "No outputs directory"
 
-      - name: Locate APK
-        run: find build -name "*.apk" -type f
+      - name: Locate and copy APK
+        run: |
+          APK_PATH=$(find build -name "*.apk" -type f -print -quit)
+          if [ -z "$APK_PATH" ]; then
+            echo "APK not found!"
+            find build -type d | head -20
+            exit 1
+          fi
+          echo "Found APK at: $APK_PATH"
+          mkdir -p release-artifacts
+          cp "$APK_PATH" release-artifacts/app-release.apk
+          ls -lh release-artifacts/
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/**/*.apk
+          files: release-artifacts/app-release.apk
           draft: false
-          fail_on_unmatched_files: false
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
