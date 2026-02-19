@@ -55,8 +55,14 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
+      - name: Check Gradle configuration
+        run: |
+          cd android
+          ./gradlew --version
+          ./gradlew tasks | head -30
+
       - name: Build APK
-        run: flutter build apk --release -v
+        run: flutter build apk --release -v 2>&1 | tail -100
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
