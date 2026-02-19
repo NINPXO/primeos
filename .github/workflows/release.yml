@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  packages: write
 
 jobs:
   build_apk:
@@ -25,32 +24,23 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Get dependencies
-        run: |
-          flutter pub get || {
-            echo "Attempting dependency resolution..."
-            flutter pub upgrade --major-versions || true
-          }
-
-      - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs || true
-
-      - name: Clean Flutter build
-        run: flutter clean
-
-      - name: Get dependencies again after clean
+      - name: Install dependencies
         run: flutter pub get
 
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
+
       - name: Build APK
-        id: build_apk
-        continue-on-error: true
-        run: flutter build apk --release --verbose 2>&1 | tail -200
+        run: flutter build apk --release
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: build/app/outputs/flutter-apk/app-release.apk
           draft: false
-          fail_on_unmatched_files: false
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
