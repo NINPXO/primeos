@@ -35,8 +35,11 @@ class SearchResult with _$SearchResult {
     required List<String> tags,
     required DateTime createdAt,
   }) = NoteResult;
+}
 
-  // Helper to get human-readable type
+/// Extension providing helper methods for SearchResult
+extension SearchResultHelpers on SearchResult {
+  /// Get human-readable type
   String get sourceType => map(
     goalResult: (_) => 'Goal',
     progressResult: (_) => 'Progress',
@@ -44,7 +47,7 @@ class SearchResult with _$SearchResult {
     noteResult: (_) => 'Note',
   );
 
-  // Helper to get route for deep linking
+  /// Get route for deep linking
   String get deepLinkRoute => map(
     goalResult: (goal) => '/goals/${goal.id}',
     progressResult: (progress) => '/progress',

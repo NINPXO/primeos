@@ -35,7 +35,7 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
       try {
         final delta = quill.Delta.fromJson(
           List<Map<String, dynamic>>.from(
-            (widget.note!.contentJson as dynamic is String)
+            (widget.note!.contentJson is String)
                 ? []
                 : widget.note!.contentJson,
           ),
