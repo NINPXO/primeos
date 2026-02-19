@@ -102,7 +102,7 @@ class _GlobalSearchScreenState extends ConsumerState<GlobalSearchScreen> {
 
                 if (results.isEmpty) {
                   return EmptyStateWidget(
-                    icon: Icons.not_found,
+                    icon: Icons.search_off,
                     title: 'No Results',
                     message: 'Try different keywords',
                   );

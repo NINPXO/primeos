@@ -12,14 +12,14 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<AppResult<List<SearchResult>>> search(String query) async {
     try {
       if (query.trim().isEmpty) {
-        return const AppResult.success([]);
+        return AppResult.success([]);
       }
 
       final results = await localDataSource.searchAll(query);
       return AppResult.success(results);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Search failed: ${e.toString()}'),
+        DatabaseFailure( 'Search failed: ${e.toString()}'),
       );
     }
   }
@@ -28,10 +28,10 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<AppResult<List<String>>> getSearchHistory() async {
     try {
       // TODO: Implement search history retrieval from app_settings table
-      return const AppResult.success([]);
+      return AppResult.success([]);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to retrieve search history: $e'),
+        DatabaseFailure( 'Failed to retrieve search history: $e'),
       );
     }
   }
@@ -40,10 +40,10 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<AppResult<void>> saveSearchHistory(String query) async {
     try {
       // TODO: Implement search history saving to app_settings table
-      return const AppResult.success(null);
+      return AppResult.success(null);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to save search history: $e'),
+        DatabaseFailure( 'Failed to save search history: $e'),
       );
     }
   }
@@ -52,10 +52,10 @@ class SearchRepositoryImpl implements SearchRepository {
   Future<AppResult<void>> clearSearchHistory() async {
     try {
       // TODO: Implement search history clearing
-      return const AppResult.success(null);
+      return AppResult.success(null);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to clear search history: $e'),
+        DatabaseFailure( 'Failed to clear search history: $e'),
       );
     }
   }

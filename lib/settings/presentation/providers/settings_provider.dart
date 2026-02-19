@@ -31,13 +31,13 @@ final appSettingsProvider = FutureProvider<AppSettingsEntity>((ref) async {
   final useCase = await ref.watch(getAppSettingsUseCaseProvider.future);
   final result = await useCase();
 
-  return result.maybeMap(
-    success: (success) => success.data,
-    orElse: () => const AppSettingsEntity(
+  return result.fold(
+    (failure) => const AppSettingsEntity(
       themeMode: 'system',
       dbVersion: '1',
       updatedAt: null,
     ),
+    (data) => data,
   );
 });
 
@@ -83,12 +83,23 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
 
 /// Provider for theme mode state
 final themeModeProvider =
-    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) async {
-  final useCase = await ref.watch(updateThemeModeUseCaseProvider.future);
-  final settings = await ref.watch(appSettingsProvider.future);
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  final settings = ref.watch(appSettingsProvider).maybeWhen(
+    data: (data) => data,
+    orElse: () => const AppSettingsEntity(
+      themeMode: 'system',
+      dbVersion: '1',
+      updatedAt: null,
+    ),
+  );
 
   return ThemeModeNotifier(
-    updateThemeModeUseCase: useCase,
+    updateThemeModeUseCase: UpdateThemeMode(
+      ref.watch(settingsRepositoryProvider).maybeWhen(
+        data: (repo) => repo,
+        orElse: () => throw UnimplementedError(),
+      ),
+    ),
     initialMode: settings.themeMode,
   );
-}.asNotifier());
+});

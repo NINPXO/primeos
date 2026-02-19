@@ -50,8 +50,8 @@ final searchResultsProvider =
 
   // Perform search
   final result = await useCase(query);
-  return result.maybeMap(
-    success: (success) => success.data,
-    orElse: () => [],
+  return result.fold(
+    (failure) => [],
+    (data) => data,
   );
 });

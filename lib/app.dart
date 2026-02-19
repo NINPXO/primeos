@@ -9,32 +9,26 @@ class PrimeOSApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeModeAsync = ref.watch(themeModeProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
-    return themeModeAsync.when(
-      loading: () => const _LoadingApp(),
-      error: (error, stack) => const _LoadingApp(),
-      data: (themeMode) {
-        return MaterialApp.router(
-          title: 'PrimeOS',
-          routerConfig: appRouter,
-          themeMode: themeMode,
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF1A73E8),
-              brightness: Brightness.light,
-            ),
-          ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color(0xFF1A73E8),
-              brightness: Brightness.dark,
-            ),
-          ),
-        );
-      },
+    return MaterialApp.router(
+      title: 'PrimeOS',
+      routerConfig: appRouter,
+      themeMode: themeMode,
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1A73E8),
+          brightness: Brightness.light,
+        ),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1A73E8),
+          brightness: Brightness.dark,
+        ),
+      ),
     );
   }
 }

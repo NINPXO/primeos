@@ -15,7 +15,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       return AppResult.success(settings.toEntity());
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to get settings: ${e.toString()}'),
+        DatabaseFailure( 'Failed to get settings: ${e.toString()}'),
       );
     }
   }
@@ -24,10 +24,10 @@ class SettingsRepositoryImpl implements SettingsRepository {
   Future<AppResult<void>> updateSetting(String key, String value) async {
     try {
       await localDataSource.updateSetting(key, value);
-      return const AppResult.success(null);
+      return AppResult.success(null);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to update setting: ${e.toString()}'),
+        DatabaseFailure( 'Failed to update setting: ${e.toString()}'),
       );
     }
   }
@@ -53,7 +53,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       return AppResult.success(mode);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to get theme mode: ${e.toString()}'),
+        DatabaseFailure( 'Failed to get theme mode: ${e.toString()}'),
       );
     }
   }
@@ -62,10 +62,10 @@ class SettingsRepositoryImpl implements SettingsRepository {
   Future<AppResult<void>> setThemeMode(String mode) async {
     try {
       await localDataSource.setThemeMode(mode);
-      return const AppResult.success(null);
+      return AppResult.success(null);
     } catch (e) {
       return AppResult.failure(
-        DatabaseFailure(message: 'Failed to set theme mode: ${e.toString()}'),
+        DatabaseFailure( 'Failed to set theme mode: ${e.toString()}'),
       );
     }
   }
