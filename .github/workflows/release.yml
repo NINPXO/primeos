@@ -67,6 +67,13 @@ jobs:
           echo "=== GRADLE BUILD DIR ==="
           ls -la android/app/build/outputs/ || echo "No outputs directory"
 
+      - name: Find APK file
+        run: |
+          echo "=== Searching for APK files ==="
+          find build -name "*.apk" -type f 2>/dev/null || echo "No APK found"
+          echo "=== Full outputs directory structure ==="
+          find build/app/outputs -type f 2>/dev/null | head -20 || echo "No outputs directory"
+
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
