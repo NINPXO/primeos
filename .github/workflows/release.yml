@@ -74,13 +74,14 @@ jobs:
           echo "=== Full outputs directory structure ==="
           find build/app/outputs -type f 2>/dev/null | head -20 || echo "No outputs directory"
 
+      - name: Locate APK
+        run: find build -name "*.apk" -type f
+
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/apk/release/app-release.apk
+          files: build/**/*.apk
           draft: false
           fail_on_unmatched_files: false
         env:
