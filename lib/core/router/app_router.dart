@@ -2,24 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../shared/widgets/app_scaffold.dart';
 import '../../features/search/presentation/screens/global_search_screen.dart';
+import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
+import '../../features/trash/presentation/screens/trash_screen.dart';
 import '../../settings/presentation/screens/settings_screen.dart';
 
-// Placeholder screens
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Dashboard'));
-  }
-}
-
+// Placeholder screens for features not yet implemented
 class DailyLogScreen extends StatelessWidget {
   const DailyLogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Daily Log'));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Daily Log')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.calendar_today, size: 64, color: Colors.grey),
+            SizedBox(height: 16),
+            Text('Daily Log Feature'),
+            SizedBox(height: 8),
+            Text('Coming soon...', style: TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -28,7 +35,21 @@ class GoalsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Goals'));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Goals')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.flag, size: 64, color: Colors.grey),
+            SizedBox(height: 16),
+            Text('Goals Feature'),
+            SizedBox(height: 8),
+            Text('Coming soon...', style: TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -37,7 +58,21 @@ class ProgressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Progress'));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Progress')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.trending_up, size: 64, color: Colors.grey),
+            SizedBox(height: 16),
+            Text('Progress Feature'),
+            SizedBox(height: 8),
+            Text('Coming soon...', style: TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -46,16 +81,21 @@ class NotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Notes'));
-  }
-}
-
-class TrashScreen extends StatelessWidget {
-  const TrashScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Trash'));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Notes')),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.note, size: 64, color: Colors.grey),
+            SizedBox(height: 16),
+            Text('Notes Feature'),
+            SizedBox(height: 8),
+            Text('Coming soon...', style: TextStyle(color: Colors.grey)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
