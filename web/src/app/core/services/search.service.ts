@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { db } from '../database/app-database';
-import { SearchResult } from '../models';
+import { SearchResult, Goal, ProgressEntry, DailyLogEntry, Note } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class SearchService {
         .equals(false)
         .toArray();
 
-      goals.forEach(goal => {
+      goals.forEach((goal: Goal) => {
         if (
           goal.title.toLowerCase().includes(lowerQuery) ||
           goal.description?.toLowerCase().includes(lowerQuery)
@@ -43,7 +43,7 @@ export class SearchService {
         .equals(false)
         .toArray();
 
-      progressEntries.forEach(entry => {
+      progressEntries.forEach((entry: ProgressEntry) => {
         if (entry.note?.toLowerCase().includes(lowerQuery)) {
           results.push({
             type: 'progress',

@@ -9,6 +9,7 @@ import {
   UpdateLogEntryRequest,
   DailyLogViewData,
 } from '../../../shared/models';
+import type { DailyLogEntry } from '../../../core/models';
 
 /**
  * Daily Log Service
@@ -49,7 +50,7 @@ export class DailyLogService {
    * Get categories as observable
    */
   getCategories$(): Observable<LogCategory[]> {
-    return this.categories$.asObservable();
+    return this.categories$;
   }
 
   /**
@@ -60,11 +61,11 @@ export class DailyLogService {
       const entries = await this.db.logEntries
         .where('date')
         .equals(date)
-        .and((entry) => !entry.isDeleted)
+        .and((entry: LogEntry) => !entry.isDeleted)
         .toArray();
 
       const entriesWithCategory = await Promise.all(
-        entries.map(async (entry) => {
+        entries.map(async (entry: LogEntry) => {
           const category = await this.db.logCategories.get(entry.categoryId);
           return {
             ...entry,
@@ -85,7 +86,7 @@ export class DailyLogService {
    * Get entries as observable
    */
   getEntries$(): Observable<LogEntryWithCategory[]> {
-    return this.entries$.asObservable();
+    return this.entries$;
   }
 
   /**

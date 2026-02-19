@@ -21,7 +21,7 @@ export class NotesService {
         .where('isDeleted')
         .equals(false)
         .toArray();
-      notes.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+      notes.sort((a: Note, b: Note) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       this.notes$.next(notes);
     } catch (error) {
       console.error('Error loading notes:', error);

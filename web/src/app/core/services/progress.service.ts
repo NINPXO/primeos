@@ -20,7 +20,7 @@ export class ProgressService {
         .equals(false)
         .toArray();
       // Sort by date descending
-      entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.loggedDate).getTime() - new Date(a.loggedDate).getTime());
       this.entries$.next(entries);
     } catch (error) {
       console.error('Error loading progress entries:', error);
@@ -36,9 +36,9 @@ export class ProgressService {
       const entries = await db.progressEntries
         .where('goalId')
         .equals(goalId)
-        .filter(e => !e.isDeleted)
+        .filter((e: ProgressEntry) => !e.isDeleted)
         .toArray();
-      return entries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      return entries.sort((a: ProgressEntry, b: ProgressEntry) => new Date(b.loggedDate).getTime() - new Date(a.loggedDate).getTime());
     } catch (error) {
       console.error('Error loading progress for goal:', error);
       return [];
