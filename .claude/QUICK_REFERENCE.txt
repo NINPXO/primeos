@@ -1,0 +1,199 @@
+================================================================================
+                 PRIMEOS TASK SYSTEM - QUICK REFERENCE CARD
+================================================================================
+
+PROJECT STATS:
+  Total Tasks: 40 (broken from 3 broad tasks)
+  Execution Time (Parallel): ~5.5 hours
+  Execution Time (Sequential): 15-20 hours
+  Time Saved: 80-85%
+  Agents Needed: 6-8 concurrent
+
+================================================================================
+
+TASK BREAKDOWN BY CATEGORY:
+
+PHASE 1 - INFRASTRUCTURE (Run First, ~1-2 hours)
+┌─────────────────────────────────────────────────┐
+│ Flutter Setup:          Angular Setup:          │
+│ #11 pubspec.yaml        #23 package.json        │
+│ #12 analysis            #24 build               │
+│ #13 tests               #25 tests               │
+│ #14 APK build           #26 startup             │
+│                         #36 Dexie DB            │
+│ Status: READY           Status: READY           │
+│ Can Run In Parallel: YES                        │
+└─────────────────────────────────────────────────┘
+
+PHASE 2 - FEATURES (Run After Phase 1, ~2-3 hours)
+┌──────────────────────────────────────────────────────────┐
+│ Flutter Features:       Angular Features:                │
+│ #15 Goals              #27 Goals                        │
+│ #16 Progress           #28 Progress                      │
+│ #17 Daily Log          #29 Daily Log                     │
+│ #18 Notes              #30 Notes + Quill                 │
+│ #19 Dashboard          #31 Dashboard                     │
+│ #20 Search             #32 Search                        │
+│ #21 Settings           #33 Settings                      │
+│ #22 Trash              #34 Trash                         │
+│                        #35 Bottom Nav                    │
+│ Status: READY          Status: READY                     │
+│ Blocked By: Phase 1    Blocked By: Phase 1 + #36         │
+│ Can Run In Parallel: YES (after Phase 1)                 │
+└──────────────────────────────────────────────────────────┘
+
+PHASE 3 - CI/CD (Run After Phases 1&2, ~1-2 hours)
+┌────────────────────────────────────────────┐
+│ GitHub Actions Workflows:                  │
+│ #37 CI Workflow (.github/workflows/ci.yml) │
+│ #38 Web Deploy (to GitHub Pages)           │
+│ #39 Mobile Release (APK on tags)           │
+│ #40 Verify All Workflows                   │
+│ Status: READY                              │
+│ Blocked By: All Phase 1 & 2 tasks          │
+│ Can Run In Parallel: YES (after P1&P2)     │
+└────────────────────────────────────────────┘
+
+================================================================================
+
+TASK MANAGEMENT COMMANDS:
+
+View All Tasks:
+  TaskList
+
+Get Task Details:
+  TaskGet taskId=11
+
+Mark Task In Progress:
+  TaskUpdate taskId=11 status=in_progress
+
+Mark Task Complete:
+  TaskUpdate taskId=11 status=completed
+
+================================================================================
+
+RECOMMENDED AGENT ASSIGNMENT:
+
+PHASE 1 (Start Immediately)
+  Agent A: #11, #12, #13, #14 (Flutter setup) - 1-2 hours
+  Agent B: #23, #24, #25, #26 (Angular setup) - 1-2 hours
+  Agent C: #36 (Dexie database) - 30-45 min
+  All 3 can run in parallel!
+
+PHASE 2 (After Phase 1 Complete)
+  Agent D: #15, #16, #17, #18 (Flutter features 1-4) - 2 hours
+  Agent E: #19, #20, #21, #22 (Flutter features 5-8) - 2 hours
+  Agent F: #27, #28, #29, #30 (Angular features 1-4) - 2.5 hours
+  Agent G: #31, #32, #33, #34, #35 (Angular features 5-9) - 2.5 hours
+  All 4 can run in parallel!
+
+PHASE 3 (After Phases 1 & 2 Complete)
+  Agent H: #37, #38, #39, #40 (CI/CD workflows) - 1.5 hours
+  Can run in parallel!
+
+TOTAL: 8 agents, ~5.5 hours to completion
+
+================================================================================
+
+TASK EXECUTION CHECKLIST FOR EACH AGENT:
+
+For each task assigned to you:
+
+Step 1: Read the task
+  TaskGet taskId=[YOUR_TASK_NUMBER]
+
+Step 2: Mark as in progress
+  TaskUpdate taskId=[YOUR_TASK_NUMBER] status=in_progress
+
+Step 3: Complete the work
+  - Read acceptance criteria carefully
+  - Complete all required work
+  - Run tests/builds as specified
+  - Fix any errors
+
+Step 4: Verify before completing
+  ☑ All acceptance criteria met
+  ☑ No syntax/build errors
+  ☑ All tests passing
+  ☑ No console errors
+  ☑ Feature works as designed
+  ☑ Documentation complete
+
+Step 5: Mark as complete
+  TaskUpdate taskId=[YOUR_TASK_NUMBER] status=completed
+
+Step 6: Check if more tasks available
+  TaskList
+
+================================================================================
+
+KEY DOCUMENTS:
+
+Global Framework (Reusable):
+  ~/.claude/TASK_DECOMPOSITION_GLOBAL.md
+  → Use for future projects
+
+Project-Specific:
+  .claude/TASK_DECOMPOSITION_TEMPLATE.md
+  .claude/TASK_BREAKDOWN_SUMMARY.md
+  .claude/TASK_EXECUTION_GUIDE.md
+  .claude/memory/TASK_SYSTEM_INITIALIZED.md
+
+================================================================================
+
+IMPORTANT REMINDERS:
+
+✓ Do NOT commit your code - Leader Agent will consolidate
+✓ Always mark task status in_progress when you start
+✓ Don't start Phase 2 until Phase 1 is complete
+✓ Don't start Phase 3 until Phase 1 & 2 are complete
+✓ Each task has specific acceptance criteria - follow them
+✓ Verify before marking complete - quality gates are important
+✓ Work on ONE task at a time (can work on multiple if assigned)
+✓ If blocked, ask for help - don't skip acceptance criteria
+
+================================================================================
+
+TIMELINE ESTIMATES:
+
+  T+0:00 → Start Phase 1 (9 tasks in parallel)
+  T+2:00 → Phase 1 complete, Start Phase 2 (16 tasks in parallel)
+  T+4:00 → Phase 2 complete, Start Phase 3 (4 tasks in parallel)
+  T+5:30 → Phase 3 complete
+  T+6:00 → Final commit and push to main
+  T+6:00 → DONE!
+
+Total: ~6 hours from start to production-ready project
+
+================================================================================
+
+WHAT SUCCESS LOOKS LIKE:
+
+✓ All 40 tasks show status "completed" in TaskList
+✓ Flutter app runs without errors
+✓ Angular web app loads at localhost:4200
+✓ All unit tests passing (flutter test, npm test)
+✓ CI/CD workflows created and working
+✓ All features implemented and functional
+✓ No console errors or warnings
+✓ Code committed to git on main branch
+✓ Ready for deployment
+
+================================================================================
+
+FOR QUESTIONS:
+
+1. Read the detailed guide: .claude/TASK_EXECUTION_GUIDE.md
+2. Check the global pattern: ~/.claude/TASK_DECOMPOSITION_GLOBAL.md
+3. Review the project summary: .claude/TASK_BREAKDOWN_SUMMARY.md
+4. Ask the Leader Agent for clarification
+
+================================================================================
+
+Version: 1.0
+Created: 2026-02-19
+Status: READY FOR EXECUTION
+
+Next Step: Assign Phase 1 tasks to agents and begin execution!
+
+================================================================================

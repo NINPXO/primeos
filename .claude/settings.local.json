@@ -96,7 +96,9 @@
       "Bash(powershell -ExecutionPolicy Bypass -Command:*)",
       "Bash(/c/ClodueSpace/PrimeOS/web/src/app/core/services/index.ts:*)",
       "Bash(/tmp/agent_d_verification.md:*)",
-      "Bash(timeout 10 ps:*)"
+      "Bash(timeout 10 ps:*)",
+      "Bash(/tmp/task_system_summary.txt:*)",
+      "Bash(/tmp/final_summary.txt:*)"
     ]
   }
 }
