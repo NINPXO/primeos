@@ -26,7 +26,10 @@ jobs:
 
       - name: Configure Flutter SDK path
         run: |
-          sed -i "s|flutter.sdk=.*|flutter.sdk=$FLUTTER_ROOT|" android/local.properties
+          cat > android/local.properties << EOF
+          sdk.dir=$ANDROID_SDK_ROOT
+          flutter.sdk=$FLUTTER_ROOT
+          EOF
 
       - name: Install dependencies
         run: flutter pub get
