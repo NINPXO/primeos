@@ -1,27 +1,4 @@
-def flutterSdkPath() {
-    def flutterRoot = System.getenv("FLUTTER_ROOT")
-    if (flutterRoot != null) {
-        return flutterRoot
-    }
-
-    def flutterProperties = new File(rootProject.projectDir.parent.parent, ".flutter-settings")
-    if (flutterProperties.exists()) {
-        flutterProperties.withReader('UTF-8') { reader ->
-            def properties = new Properties()
-            properties.load(reader)
-            return properties.getProperty('flutter.sdk')
-        }
-    }
-
-    return null
-}
-
 pluginManagement {
-    def flutterSdk = flutterSdkPath()
-    if (flutterSdk != null) {
-        includeBuild("$flutterSdk/packages/flutter_tools/gradle")
-    }
-
     repositories {
         google()
         mavenCentral()
@@ -34,9 +11,3 @@ plugins {
 }
 
 include ":app"
-
-def flutterSdk = flutterSdkPath()
-if (flutterSdk != null) {
-    include ":flutter"
-    project(":flutter").projectDir = new File(flutterSdk, "packages/flutter/android")
-}
