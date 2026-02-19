@@ -1,0 +1,52 @@
+<div class="form-overlay" (click)="onCancel()">
+  <div class="form-modal" (click)="$event.stopPropagation()">
+    <div class="form-header">
+      <h2>{{ isEdit ? 'Edit' : 'Add' }} Entry</h2>
+      <button mat-icon-button (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="form-content">
+      <!-- Category Selection -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="form.categoryId" name="categoryId">
+          <mat-option
+            *ngFor="let category of categories"
+            [value]="category.id"
+          >
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Note Input -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Note</mat-label>
+        <textarea
+          matInput
+          [(ngModel)]="form.note"
+          name="note"
+          placeholder="Enter your log entry..."
+          rows="6"
+        ></textarea>
+      </mat-form-field>
+
+      <!-- Error Messages -->
+      <div *ngIf="errors.length > 0" class="error-messages">
+        <p *ngFor="let error of errors" class="error">
+          <mat-icon>error</mat-icon>
+          {{ error }}
+        </p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button mat-stroked-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onSave()">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+    </div>
+  </div>
+</div>

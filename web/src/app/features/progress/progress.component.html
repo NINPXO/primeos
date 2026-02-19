@@ -1,0 +1,63 @@
+<div class="progress-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <h1>Progress Tracking</h1>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="openLogProgress()">
+      <mat-icon>add</mat-icon>
+      Log Progress
+    </button>
+  </mat-toolbar>
+
+  <div class="controls">
+    <mat-form-field appearance="outline">
+      <mat-label>Filter by Goal</mat-label>
+      <mat-select [value]="selectedGoalId" (selectionChange)="onGoalFilterChange($event.value)">
+        <mat-option value="">All Goals</mat-option>
+        <mat-option *ngFor="let goal of goals" [value]="goal.id">
+          {{ goal.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!selectedGoalId"
+      (click)="viewChart()">
+      <mat-icon>show_chart</mat-icon>
+      View Chart
+    </button>
+  </div>
+
+  <div class="entries-list">
+    <div *ngIf="filteredEntries.length === 0" class="empty-state">
+      <mat-icon>trending_up</mat-icon>
+      <p>No progress entries yet. Start logging your progress!</p>
+    </div>
+
+    <div *ngFor="let [date, entries] of getGroupedEntries()" class="date-group">
+      <h3 class="date-header">{{ date }}</h3>
+
+      <mat-card *ngFor="let entry of entries" class="entry-card">
+        <mat-card-content>
+          <div class="entry-info">
+            <div class="entry-goal">
+              <strong>{{ getGoalTitle(entry.goalId) }}</strong>
+            </div>
+            <div class="entry-value">
+              <span class="value-number">{{ entry.value }}</span>
+            </div>
+            <div *ngIf="entry.note" class="entry-note">
+              {{ entry.note }}
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-icon-button matTooltip="Delete" (click)="deleteEntry(entry.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

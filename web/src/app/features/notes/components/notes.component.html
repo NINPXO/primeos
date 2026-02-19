@@ -1,0 +1,157 @@
+<div class="notes-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Notes</h1>
+    <button mat-raised-button color="primary" (click)="newNote()">
+      <mat-icon>add</mat-icon>
+      New Note
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Search notes...</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+        placeholder="Search by title or tags"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="viewMenu"
+      [attr.aria-label]="'View options'"
+    >
+      <mat-icon>view_agenda</mat-icon>
+    </button>
+    <mat-menu #viewMenu="matMenu">
+      <button mat-menu-item (click)="toggleView('grid')">
+        <mat-icon>grid_view</mat-icon>
+        <span>Grid</span>
+      </button>
+      <button mat-menu-item (click)="toggleView('list')">
+        <mat-icon>list</mat-icon>
+        <span>List</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <!-- Tag Filter -->
+  <div class="tags-filter" *ngIf="allTags.length > 0">
+    <div class="tags-label">Filter by tags:</div>
+    <mat-chip-set>
+      <mat-chip
+        *ngFor="let tag of allTags"
+        [selected]="isTagSelected(tag.id)"
+        (click)="toggleTag(tag.id)"
+      >
+        {{ tag.name }}
+      </mat-chip>
+    </mat-chip-set>
+    <button
+      mat-button
+      (click)="clearFilters()"
+      *ngIf="selectedTags.length > 0 || searchTerm"
+    >
+      Clear Filters
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredNotes.length === 0" class="empty-state">
+    <mat-icon>note</mat-icon>
+    <p>No notes found</p>
+    <button mat-raised-button color="primary" (click)="newNote()">
+      Create your first note
+    </button>
+  </div>
+
+  <!-- Grid View -->
+  <div class="notes-grid" *ngIf="viewMode === 'grid' && filteredNotes.length > 0">
+    <mat-card *ngFor="let note of filteredNotes" class="note-card">
+      <mat-card-header>
+        <mat-card-title>{{ note.title }}</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="note-preview">{{ getPreview(note) }}...</p>
+
+        <div class="note-tags" *ngIf="getNoteTags(note).length > 0">
+          <mat-chip *ngFor="let tag of getNoteTags(note)">
+            {{ tag.name }}
+          </mat-chip>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-icon-button (click)="editNote(note)" [attr.aria-label]="'Edit'">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="archiveNote(note)"
+          [attr.aria-label]="'Archive'"
+        >
+          <mat-icon>archive</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="deleteNote(note)"
+          [attr.aria-label]="'Delete'"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <!-- List View -->
+  <div class="notes-list" *ngIf="viewMode === 'list' && filteredNotes.length > 0">
+    <mat-card *ngFor="let note of filteredNotes" class="note-list-item">
+      <div class="note-item-content">
+        <div>
+          <mat-card-title>{{ note.title }}</mat-card-title>
+          <p class="note-preview">{{ getPreview(note) }}...</p>
+          <div class="note-tags" *ngIf="getNoteTags(note).length > 0">
+            <mat-chip *ngFor="let tag of getNoteTags(note)">
+              {{ tag.name }}
+            </mat-chip>
+          </div>
+        </div>
+        <div class="note-item-actions">
+          <button mat-icon-button (click)="editNote(note)" [attr.aria-label]="'Edit'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="archiveNote(note)"
+            [attr.aria-label]="'Archive'"
+          >
+            <mat-icon>archive</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deleteNote(note)"
+            [attr.aria-label]="'Delete'"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Editor Modal -->
+  <ng-container *ngIf="isEditorVisible">
+    <app-note-editor
+      [note]="selectedNote"
+      [allTags]="allTags"
+      (save)="onEditorSave($event)"
+      (cancel)="closeEditor()"
+    ></app-note-editor>
+  </ng-container>
+</div>

@@ -1,0 +1,57 @@
+<div class="goal-detail">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ goal.title }}</mat-card-title>
+      <mat-chip-set aria-label="Status">
+        <mat-chip [style.background-color]="getStatusColor()" style="color: white;">
+          {{ goal.status | titlecase }}
+        </mat-chip>
+      </mat-chip-set>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="goal-info">
+        <div class="info-row">
+          <label>Description:</label>
+          <p>{{ goal.description || 'No description provided' }}</p>
+        </div>
+
+        <div class="info-row">
+          <label>Target Date:</label>
+          <p>{{ goal.targetDate | date: 'long' }}</p>
+        </div>
+
+        <div class="info-row">
+          <label>Created:</label>
+          <p>{{ goal.createdAt | date: 'short' }}</p>
+        </div>
+      </div>
+
+      <div class="progress-section" *ngIf="progressEntries.length > 0">
+        <h3>Recent Progress (Last 10 entries)</h3>
+        <mat-list>
+          <mat-list-item *ngFor="let entry of progressEntries">
+            <span matListItemTitle>{{ entry.date | date: 'short' }}</span>
+            <span matListItemLine>Value: {{ entry.value }}</span>
+            <span matListItemLine *ngIf="entry.note">Note: {{ entry.note }}</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="no-progress" *ngIf="progressEntries.length === 0">
+        <p>No progress entries yet. Start logging progress to track your goal!</p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button (click)="editGoal()">
+        <mat-icon>edit</mat-icon>
+        Edit
+      </button>
+      <button mat-button color="warn" (click)="deleteGoal()">
+        <mat-icon>delete</mat-icon>
+        Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

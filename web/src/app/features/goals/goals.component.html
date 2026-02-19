@@ -1,0 +1,91 @@
+<div class="goals-container">
+  <mat-toolbar color="primary" class="toolbar">
+    <h1>Goals</h1>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="openNewGoal()">
+      <mat-icon>add</mat-icon>
+      New Goal
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openCategoryManager()">
+        <mat-icon>category</mat-icon>
+        <span>Manage Categories</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Status Filter</mat-label>
+      <mat-select [value]="statusFilter" (selectionChange)="onStatusFilterChange($event.value)">
+        <mat-option value="all">All Goals</mat-option>
+        <mat-option value="active">Active</mat-option>
+        <mat-option value="completed">Completed</mat-option>
+        <mat-option value="on-hold">On Hold</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="goals-list">
+    <div *ngFor="let category of getUniqueCategories()" class="category-section">
+      <h2 class="category-title">
+        <span
+          class="color-indicator"
+          [style.background-color]="getCategoryColor(category.id)">
+        </span>
+        {{ category.name }}
+      </h2>
+
+      <div class="goals-grid">
+        <mat-card
+          *ngFor="let goal of getGoalsByCategory(category.id)"
+          class="goal-card"
+          [class.completed]="goal.status === 'completed'"
+          [class.on-hold]="goal.status === 'on-hold'">
+
+          <mat-card-header>
+            <mat-card-title>{{ goal.title }}</mat-card-title>
+            <mat-chip-set aria-label="Status">
+              <mat-chip
+                [class.active]="goal.status === 'active'"
+                [class.completed]="goal.status === 'completed'"
+                [class.on-hold]="goal.status === 'on-hold'">
+                {{ goal.status | titlecase }}
+              </mat-chip>
+            </mat-chip-set>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>{{ goal.description }}</p>
+            <small class="date">Target: {{ goal.targetDate | date: 'short' }}</small>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-icon-button matTooltip="View Details" (click)="viewGoal(goal)">
+              <mat-icon>info</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Edit" (click)="editGoal(goal)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Delete" (click)="deleteGoal(goal.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div *ngIf="getGoalsByCategory(category.id).length === 0" class="empty-state">
+        <mat-icon>not_interested</mat-icon>
+        <p>No goals in this category</p>
+      </div>
+    </div>
+
+    <div *ngIf="filteredGoals.length === 0" class="empty-container">
+      <mat-icon>flag</mat-icon>
+      <p>No goals yet. Create your first goal to get started!</p>
+    </div>
+  </div>
+</div>

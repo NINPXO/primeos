@@ -1,0 +1,85 @@
+.goal-detail {
+  width: 100%;
+
+  mat-card {
+    mat-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+
+      mat-card-title {
+        margin: 0;
+        flex: 1;
+      }
+
+      mat-chip-set {
+        margin: -8px 0 0 0;
+      }
+    }
+
+    mat-card-content {
+      padding: 0 16px 16px 16px;
+
+      .goal-info {
+        margin-bottom: 24px;
+
+        .info-row {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 16px;
+
+          label {
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.87);
+            font-size: 14px;
+          }
+
+          p {
+            margin: 0;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+          }
+        }
+      }
+
+      .progress-section {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid #eee;
+
+        h3 {
+          margin: 0 0 16px 0;
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        mat-list {
+          padding: 0;
+        }
+
+        mat-list-item {
+          height: auto;
+          padding: 12px 0;
+        }
+      }
+
+      .no-progress {
+        text-align: center;
+        padding: 32px 16px;
+        color: rgba(0, 0, 0, 0.4);
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+  }
+}

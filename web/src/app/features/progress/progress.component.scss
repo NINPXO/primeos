@@ -1,0 +1,123 @@
+.progress-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: flex-end;
+
+  mat-form-field {
+    min-width: 250px;
+  }
+}
+
+.entries-list {
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: rgba(0, 0, 0, 0.4);
+
+    mat-icon {
+      font-size: 64px;
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 0;
+    }
+  }
+
+  .date-group {
+    margin-bottom: 32px;
+
+    .date-header {
+      font-size: 16px;
+      font-weight: 600;
+      color: rgba(0, 0, 0, 0.87);
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #2196f3;
+    }
+
+    .entry-card {
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      mat-card-content {
+        padding: 16px;
+
+        .entry-info {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+
+          .entry-goal {
+            flex: 1;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.87);
+
+            strong {
+              display: block;
+              margin-bottom: 4px;
+            }
+          }
+
+          .entry-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+
+            .value-number {
+              font-size: 32px;
+              font-weight: bold;
+              color: #2196f3;
+            }
+          }
+
+          .entry-note {
+            flex: 0 1 300px;
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.6);
+            font-style: italic;
+          }
+        }
+      }
+
+      mat-card-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding: 8px 0 0 0;
+      }
+    }
+  }
+}

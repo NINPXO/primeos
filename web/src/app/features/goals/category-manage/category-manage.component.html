@@ -1,0 +1,65 @@
+<div class="category-manage">
+  <h2 mat-dialog-title>Manage Goal Categories</h2>
+
+  <mat-dialog-content>
+    <div class="add-category-form">
+      <h3>Add New Category</h3>
+      <form [formGroup]="form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Category Name</mat-label>
+          <input matInput formControlName="name" placeholder="e.g., Work, Health, Finance">
+          <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+            {{ getErrorMessage('Name') }}
+          </mat-error>
+        </mat-form-field>
+
+        <div class="color-picker-row">
+          <input type="color" formControlName="color" class="color-picker">
+          <span class="color-value">{{ form.get('color')?.value }}</span>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addCategory()"
+          [disabled]="form.invalid || isSubmitting"
+          class="full-width">
+          {{ isSubmitting ? 'Adding...' : 'Add Category' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="categories-list">
+      <h3>Existing Categories</h3>
+
+      <div *ngIf="categories.length === 0" class="empty-state">
+        <p>No categories yet</p>
+      </div>
+
+      <mat-list>
+        <mat-list-item *ngFor="let category of categories">
+          <div class="category-item">
+            <span
+              class="color-indicator"
+              [style.background-color]="category.color">
+            </span>
+            <span class="category-name">{{ category.name }}</span>
+            <span *ngIf="category.isSystem" class="system-badge">System</span>
+          </div>
+          <button
+            mat-icon-button
+            matListItemMeta
+            (click)="deleteCategory(category.id)"
+            [disabled]="category.isSystem"
+            matTooltip="Delete category">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Done</button>
+  </mat-dialog-actions>
+</div>

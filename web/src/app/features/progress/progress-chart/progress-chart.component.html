@@ -1,0 +1,54 @@
+<div class="chart-container">
+  <h2 mat-dialog-title>{{ goal?.title || 'Progress Chart' }}</h2>
+
+  <mat-dialog-content>
+    <div *ngIf="progressEntries.length === 0" class="no-data">
+      <p>No progress data available yet.</p>
+    </div>
+
+    <div *ngIf="progressEntries.length > 0">
+      <div class="chart-wrapper">
+        <canvas
+          baseChart
+          [type]="'line'"
+          [data]="chartData"
+          [options]="chartOptions">
+        </canvas>
+      </div>
+
+      <div class="statistics">
+        <div class="stat">
+          <label>Average</label>
+          <span class="value">{{ getStatistics().avg }}</span>
+        </div>
+        <div class="stat">
+          <label>Minimum</label>
+          <span class="value">{{ getStatistics().min }}</span>
+        </div>
+        <div class="stat">
+          <label>Maximum</label>
+          <span class="value">{{ getStatistics().max }}</span>
+        </div>
+        <div class="stat">
+          <label>Total</label>
+          <span class="value">{{ getStatistics().total }}</span>
+        </div>
+      </div>
+
+      <div class="entries-summary">
+        <h3>All Entries ({{ progressEntries.length }})</h3>
+        <div class="entries-grid">
+          <div *ngFor="let entry of progressEntries" class="entry-item">
+            <span class="date">{{ entry.date | date: 'short' }}</span>
+            <span class="value">{{ entry.value }}</span>
+            <span *ngIf="entry.note" class="note">{{ entry.note }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Close</button>
+  </mat-dialog-actions>
+</div>

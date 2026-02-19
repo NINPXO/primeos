@@ -1,0 +1,48 @@
+<div class="app-shell">
+  <mat-toolbar color="primary" class="app-toolbar">
+    <span class="app-title">PrimeOS</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="openSearch()" matTooltip="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle theme">
+      <mat-icon>{{ currentTheme === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openSettings()">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <mat-bottom-navigation #bottomNav="matBottomNavigation" class="app-bottom-nav">
+    <button mat-tab-label routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </button>
+    <button mat-tab-label routerLink="/goals" routerLinkActive="active">
+      <mat-icon>target</mat-icon>
+      <span>Goals</span>
+    </button>
+    <button mat-tab-label routerLink="/progress" routerLinkActive="active">
+      <mat-icon>trending_up</mat-icon>
+      <span>Progress</span>
+    </button>
+    <button mat-tab-label routerLink="/daily-log" routerLinkActive="active">
+      <mat-icon>today</mat-icon>
+      <span>Daily Log</span>
+    </button>
+    <button mat-tab-label routerLink="/notes" routerLinkActive="active">
+      <mat-icon>note</mat-icon>
+      <span>Notes</span>
+    </button>
+  </mat-bottom-navigation>
+</div>

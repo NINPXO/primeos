@@ -1,0 +1,88 @@
+<div class="editor-overlay" (click)="onCancel()">
+  <div class="editor-modal" (click)="$event.stopPropagation()">
+    <div class="editor-header">
+      <h2>{{ isEdit ? 'Edit' : 'New' }} Note</h2>
+      <button mat-icon-button (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="editor-content">
+      <!-- Title Input -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          [(ngModel)]="form.title"
+          name="title"
+          placeholder="Note title"
+        />
+      </mat-form-field>
+
+      <!-- Quill Rich Text Editor -->
+      <div class="editor-label">Content</div>
+      <quill-editor
+        [(ngModel)]="form.richContent"
+        (onContentChanged)="onEditorChange($event)"
+        [modules]="editorModules"
+        [styles]="{ height: '300px' }"
+        class="quill-editor"
+      ></quill-editor>
+
+      <!-- Tags Section -->
+      <div class="tags-section">
+        <label class="editor-label">Tags</label>
+
+        <!-- Tag Input with Autocomplete -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Add tags</mat-label>
+          <input
+            matInput
+            [(ngModel)]="tagInput"
+            name="tagInput"
+            placeholder="Type tag name and press Enter"
+            (keyup.enter)="addTag($event)"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let tag of getAvailableTags()"
+              (click)="selectTag(tag)"
+            >
+              {{ tag.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Selected Tags -->
+        <div class="selected-tags">
+          <mat-chip-set>
+            <mat-chip
+              *ngFor="let tag of selectedTags"
+              [removable]="true"
+              (removed)="removeTag(tag)"
+            >
+              {{ getTagDisplayName(tag) }}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </div>
+
+      <!-- Error Messages -->
+      <div *ngIf="errors.length > 0" class="error-messages">
+        <p *ngFor="let error of errors" class="error">
+          <mat-icon>error</mat-icon>
+          {{ error }}
+        </p>
+      </div>
+    </div>
+
+    <div class="editor-actions">
+      <button mat-stroked-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="onSave()">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="daily-log-container">
+  <!-- Header with Date Navigation -->
+  <div class="header">
+    <button mat-icon-button (click)="previousDay()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <div class="date-display">
+      <h1>{{ formatDate(currentDate) }}</h1>
+    </div>
+
+    <button mat-icon-button (click)="nextDay()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <!-- Today Button and Add Entry Button -->
+  <div class="toolbar">
+    <button mat-stroked-button (click)="goToday()">Today</button>
+    <button mat-raised-button color="primary" (click)="openAddForm()">
+      <mat-icon>add</mat-icon>
+      Add Entry
+    </button>
+  </div>
+
+  <!-- Entries by Category -->
+  <div class="entries-container">
+    <ng-container *ngIf="entries.length === 0">
+      <p class="empty-message">No entries for this date</p>
+    </ng-container>
+
+    <ng-container *ngFor="let categoryId of getCategoryIds()">
+      <div class="category-section">
+        <h2 class="category-name">
+          {{ getCategoryById(categoryId)?.name }}
+        </h2>
+
+        <div class="entries-list">
+          <mat-card
+            *ngFor="let entry of getGroupedEntries().get(categoryId)"
+            class="entry-card"
+          >
+            <mat-card-content>
+              <p class="entry-note">{{ entry.note }}</p>
+              <p class="entry-time">
+                {{ entry.createdAt | date: 'short' }}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-icon-button (click)="openEditForm(entry)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteEntry(entry)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <mat-divider *ngIf="categoryId !== getCategoryIds()[getCategoryIds().length - 1]"></mat-divider>
+    </ng-container>
+  </div>
+
+  <!-- Add/Edit Entry Form Modal -->
+  <ng-container *ngIf="isFormVisible">
+    <app-log-entry-form
+      [categories]="categories"
+      [entry]="selectedEntry"
+      [currentDate]="currentDate"
+      (save)="onFormSave($event)"
+      (cancel)="closeForm()"
+    ></app-log-entry-form>
+  </ng-container>
+</div>

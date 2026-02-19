@@ -1,0 +1,65 @@
+<div class="goal-form">
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit Goal' : 'Create New Goal' }}</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter goal title">
+        <mat-error *ngIf="form.get('title')?.touched && form.get('title')?.invalid">
+          {{ getErrorMessage('Title') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Describe your goal" rows="4"></textarea>
+        <mat-hint align="end">
+          {{ form.get('description')?.value?.length || 0 }} / 500
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId">
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('categoryId')?.touched && form.get('categoryId')?.invalid">
+          {{ getErrorMessage('Category') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Target Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="targetDate">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.get('targetDate')?.touched && form.get('targetDate')?.invalid">
+          {{ getErrorMessage('Target Date') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="active">Active</mat-option>
+          <mat-option value="completed">Completed</mat-option>
+          <mat-option value="on-hold">On Hold</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="form.invalid || isSubmitting">
+      {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Update' : 'Create') }}
+    </button>
+  </mat-dialog-actions>
+</div>
