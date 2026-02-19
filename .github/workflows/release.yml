@@ -24,6 +24,10 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Configure Flutter SDK path
+        run: |
+          sed -i "s|flutter.sdk=.*|flutter.sdk=$FLUTTER_ROOT|" android/local.properties
+
       - name: Install dependencies
         run: flutter pub get
 
