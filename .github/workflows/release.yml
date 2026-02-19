@@ -35,8 +35,7 @@ jobs:
         run: |
           printf 'sdk.dir=%s\nflutter.sdk=%s\nflutter.versionCode=1\nflutter.versionName=1.0.0\n' \
             "$ANDROID_SDK_ROOT" \
-            "$FLUTTER_ROOT" \
-            > android/local.properties
+            "$FLUTTER_ROOT" > android/local.properties
 
       - name: Debug environment
         run: |
