@@ -55,11 +55,6 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
-      - name: Check Gradle configuration
-        run: |
-          cd android
-          ./gradlew --version
-
       - name: Build APK
         run: flutter build apk --release
 
