@@ -45,7 +45,22 @@
       "Bash(gh run view:*)",
       "Bash(gh api:*)",
       "WebFetch(domain:github.com)",
-      "Bash(gh release:*)"
+      "Bash(gh release:*)",
+      "Bash(gunzip:*)",
+      "Bash(gh run download:*)",
+      "Bash(xargs -I {} bash -c \"gh api repos/NINPXO/primeos/actions/runs/{}/logs -H ''Accept: application/vnd.github+json'' 2>/dev/null | gunzip 2>/dev/null || echo ''Could not decompress logs''\")",
+      "Bash(flutter pub:*)",
+      "Bash(flutter clean:*)",
+      "Bash(curl:*)",
+      "Bash(git clone:*)",
+      "Bash(choco install:*)",
+      "Bash(ping:*)",
+      "Bash(/c/ClodueSpace/flutter/bin/flutter:*)",
+      "Bash(export PATH=\"/c/ClodueSpace/flutter/bin:$PATH\")",
+      "Bash(for i in {1..120})",
+      "Bash(do sleep 5)",
+      "Bash(done)",
+      "Bash(git rm:*)"
     ]
   }
 }

@@ -36,7 +36,7 @@ final appSettingsProvider = FutureProvider<AppSettingsEntity>((ref) async {
     orElse: () => const AppSettingsEntity(
       themeMode: 'system',
       dbVersion: '1',
-      updatedAt: null as dynamic,
+      updatedAt: null,
     ),
   );
 });

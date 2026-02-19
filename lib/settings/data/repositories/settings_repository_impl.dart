@@ -1,4 +1,3 @@
-import '../../../../core/errors/database_exception.dart';
 import '../../../../core/types/app_result.dart';
 import '../../domain/entities/app_settings.dart';
 import '../../domain/repositories/settings_repository.dart';
@@ -15,7 +14,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       final settings = await localDataSource.getSettings();
       return AppResult.success(settings.toEntity());
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to get settings: ${e.toString()}'),
       );
     }
@@ -27,7 +26,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await localDataSource.updateSetting(key, value);
       return const AppResult.success(null);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to update setting: ${e.toString()}'),
       );
     }
@@ -39,7 +38,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       final value = await localDataSource.getSetting(key);
       return AppResult.success(value);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(
           message: 'Failed to get setting "$key": ${e.toString()}',
         ),
@@ -53,7 +52,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       final mode = await localDataSource.getThemeMode();
       return AppResult.success(mode);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to get theme mode: ${e.toString()}'),
       );
     }
@@ -65,7 +64,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
       await localDataSource.setThemeMode(mode);
       return const AppResult.success(null);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to set theme mode: ${e.toString()}'),
       );
     }

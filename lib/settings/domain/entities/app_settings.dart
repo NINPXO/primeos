@@ -8,6 +8,6 @@ class AppSettingsEntity with _$AppSettingsEntity {
   const factory AppSettingsEntity({
     required String themeMode, // 'light' | 'dark' | 'system'
     required String dbVersion,
-    required DateTime updatedAt,
+    DateTime? updatedAt,
   }) = _AppSettingsEntity;
 }

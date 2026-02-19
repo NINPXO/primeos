@@ -1,4 +1,3 @@
-import '../../../../core/errors/database_exception.dart';
 import '../../../../core/types/app_result.dart';
 import '../../domain/entities/search_result.dart';
 import '../../domain/repositories/search_repository.dart';
@@ -19,7 +18,7 @@ class SearchRepositoryImpl implements SearchRepository {
       final results = await localDataSource.searchAll(query);
       return AppResult.success(results);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Search failed: ${e.toString()}'),
       );
     }
@@ -31,7 +30,7 @@ class SearchRepositoryImpl implements SearchRepository {
       // TODO: Implement search history retrieval from app_settings table
       return const AppResult.success([]);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to retrieve search history: $e'),
       );
     }
@@ -43,7 +42,7 @@ class SearchRepositoryImpl implements SearchRepository {
       // TODO: Implement search history saving to app_settings table
       return const AppResult.success(null);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to save search history: $e'),
       );
     }
@@ -55,7 +54,7 @@ class SearchRepositoryImpl implements SearchRepository {
       // TODO: Implement search history clearing
       return const AppResult.success(null);
     } catch (e) {
-      return AppResult.error(
+      return AppResult.failure(
         DatabaseFailure(message: 'Failed to clear search history: $e'),
       );
     }
