@@ -4,6 +4,7 @@ import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/materia
 import { MatButtonModule } from '@angular/material/button';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartOptions } from 'chart.js';
+import { firstValueFrom } from 'rxjs';
 import { ProgressService } from '../../../core/services/progress.service';
 import { GoalsService } from '../../../core/services/goals.service';
 import { ProgressEntry, Goal } from '../../../core/models';
@@ -78,19 +79,25 @@ export class ProgressChartComponent implements OnInit {
   }
 
   private async loadData(): Promise<void> {
-    // Load goal info
-    this.goalsService.getGoals().subscribe(goals => {
+    try {
+      // Load goal info and progress entries in parallel
+      const [goals, progressEntries] = await Promise.all([
+        firstValueFrom(this.goalsService.getGoals()),
+        this.progressService.getProgressByGoal(this.goalId)
+      ]);
+
+      // Set the goal and progress entries
       this.goal = goals.find(g => g.id === this.goalId) || null;
-    });
+      this.progressEntries = progressEntries;
 
-    // Load progress entries
-    this.progressEntries = await this.progressService.getProgressByGoal(this.goalId);
+      // Sort by date ascending for chart
+      this.progressEntries.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    // Sort by date ascending for chart
-    this.progressEntries.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-    // Prepare chart data
-    this.updateChartData();
+      // Prepare chart data
+      this.updateChartData();
+    } catch (error) {
+      console.error('Error loading chart data:', error);
+    }
   }
 
   private updateChartData(): void {
