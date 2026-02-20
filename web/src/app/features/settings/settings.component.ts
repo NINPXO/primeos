@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SettingsService } from '../../core/services/settings.service';
 import { CsvExportService } from '../../core/services/csv-export.service';
 import { CsvImportService } from '../../core/services/csv-import.service';
 import { ZipExportService } from '../../core/services/zip-export.service';
+import { ZipImportService } from '../../core/services/zip-import.service';
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +22,8 @@ import { ZipExportService } from '../../core/services/zip-export.service';
     MatCardModule,
     MatSelectModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   template: `
     <div class="settings-container">
@@ -129,7 +133,8 @@ export class SettingsComponent implements OnInit {
     private settingsService: SettingsService,
     private csvExportService: CsvExportService,
     private csvImportService: CsvImportService,
-    private zipExportService: ZipExportService
+    private zipExportService: ZipExportService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -147,10 +152,22 @@ export class SettingsComponent implements OnInit {
   async exportAllData(): Promise<void> {
     try {
       const blob = await this.zipExportService.exportAll();
+      const fileSizeKB = (blob.size / 1024).toFixed(2);
       this.zipExportService.downloadExport(blob);
+      this.snackBar.open(`✓ All data exported successfully (${fileSizeKB}KB)`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['success-snackbar']
+      });
     } catch (error) {
       console.error('Export failed:', error);
-      alert('Export failed. See console for details.');
+      this.snackBar.open('✗ Export failed. See console for details.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
+      });
     }
   }
 
@@ -159,18 +176,72 @@ export class SettingsComponent implements OnInit {
   }
 
   async exportGoalsCSV(): Promise<void> {
-    const csv = await this.csvExportService.exportGoals();
-    this.downloadCSV(csv, 'goals.csv');
+    try {
+      const csv = await this.csvExportService.exportGoals();
+      const lines = csv.split('\n').filter(line => line.trim().length > 0).length;
+      this.downloadCSV(csv, 'goals.csv');
+      const fileSizeKB = (new Blob([csv]).size / 1024).toFixed(2);
+      this.snackBar.open(`✓ Goals exported (${lines} rows, ${fileSizeKB}KB)`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('Export failed:', error);
+      this.snackBar.open('✗ Goals export failed', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
+      });
+    }
   }
 
   async exportProgressCSV(): Promise<void> {
-    const csv = await this.csvExportService.exportProgress();
-    this.downloadCSV(csv, 'progress.csv');
+    try {
+      const csv = await this.csvExportService.exportProgress();
+      const lines = csv.split('\n').filter(line => line.trim().length > 0).length;
+      this.downloadCSV(csv, 'progress.csv');
+      const fileSizeKB = (new Blob([csv]).size / 1024).toFixed(2);
+      this.snackBar.open(`✓ Progress exported (${lines} rows, ${fileSizeKB}KB)`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('Export failed:', error);
+      this.snackBar.open('✗ Progress export failed', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
+      });
+    }
   }
 
   async exportNotesCSV(): Promise<void> {
-    const csv = await this.csvExportService.exportNotes();
-    this.downloadCSV(csv, 'notes.csv');
+    try {
+      const csv = await this.csvExportService.exportNotes();
+      const lines = csv.split('\n').filter(line => line.trim().length > 0).length;
+      this.downloadCSV(csv, 'notes.csv');
+      const fileSizeKB = (new Blob([csv]).size / 1024).toFixed(2);
+      this.snackBar.open(`✓ Notes exported (${lines} rows, ${fileSizeKB}KB)`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      console.error('Export failed:', error);
+      this.snackBar.open('✗ Notes export failed', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
+      });
+    }
   }
 
   private downloadCSV(csv: string, filename: string): void {
