@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 import { Goal, ProgressEntry } from '../../core/models';
 import { GoalsService } from '../../core/services/goals.service';
 import { ProgressService } from '../../core/services/progress.service';
@@ -20,6 +24,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -27,6 +32,9 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
     MatFormFieldModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
     ConfirmDialogComponent
   ],
   templateUrl: './progress.component.html',
@@ -41,6 +49,8 @@ export class ProgressComponent implements OnInit {
   goals: Goal[] = [];
   selectedGoalId: string = '';
   filteredEntries: ProgressEntry[] = [];
+  dateFrom: Date | null = null;
+  dateTo: Date | null = null;
 
   ngOnInit(): void {
     this.progressService.getProgress().subscribe(entries => {
@@ -54,11 +64,27 @@ export class ProgressComponent implements OnInit {
   }
 
   applyFilter(): void {
+    let entries = this.progressEntries;
+
+    // Filter by goal
     if (this.selectedGoalId) {
-      this.filteredEntries = this.progressEntries.filter(e => e.goalId === this.selectedGoalId);
-    } else {
-      this.filteredEntries = this.progressEntries;
+      entries = entries.filter(e => e.goalId === this.selectedGoalId);
     }
+
+    // Filter by date range
+    if (this.dateFrom) {
+      const fromDate = new Date(this.dateFrom);
+      fromDate.setHours(0, 0, 0, 0);
+      entries = entries.filter(e => new Date(e.date) >= fromDate);
+    }
+
+    if (this.dateTo) {
+      const toDate = new Date(this.dateTo);
+      toDate.setHours(23, 59, 59, 999);
+      entries = entries.filter(e => new Date(e.date) <= toDate);
+    }
+
+    this.filteredEntries = entries;
   }
 
   getGoalTitle(goalId: string): string {
@@ -68,6 +94,20 @@ export class ProgressComponent implements OnInit {
   onGoalFilterChange(goalId: string): void {
     this.selectedGoalId = goalId;
     this.applyFilter();
+  }
+
+  onDateFilterChange(): void {
+    this.applyFilter();
+  }
+
+  clearDateFilters(): void {
+    this.dateFrom = null;
+    this.dateTo = null;
+    this.applyFilter();
+  }
+
+  isDateFilterActive(): boolean {
+    return this.dateFrom !== null || this.dateTo !== null;
   }
 
   groupByDate(): Map<string, ProgressEntry[]> {

@@ -19,6 +19,29 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>From Date</mat-label>
+      <input matInput [matDatepicker]="fromDatePicker" [(ngModel)]="dateFrom" (change)="onDateFilterChange()" />
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>To Date</mat-label>
+      <input matInput [matDatepicker]="toDatePicker" [(ngModel)]="dateTo" (change)="onDateFilterChange()" />
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="accent"
+      [disabled]="!isDateFilterActive()"
+      (click)="clearDateFilters()"
+      matTooltip="Clear date filters">
+      <mat-icon>clear</mat-icon>
+    </button>
+
     <button
       mat-raised-button
       color="primary"

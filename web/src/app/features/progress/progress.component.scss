@@ -24,12 +24,17 @@
 
 .controls {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   margin-bottom: 24px;
   align-items: flex-end;
+  flex-wrap: wrap;
 
   mat-form-field {
-    min-width: 250px;
+    min-width: 200px;
+  }
+
+  button {
+    flex-shrink: 0;
   }
 }
 
