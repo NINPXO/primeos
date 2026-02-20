@@ -131,18 +131,35 @@ export class ProgressFormComponent implements OnInit {
   }
 
   getErrorMessage(fieldName: string): string {
-    const control = this.form.get(fieldName);
-    if (control?.hasError('required')) {
+    // Map display names to control names
+    const controlNameMap: { [key: string]: string } = {
+      'Goal': 'goalId',
+      'Value': 'value',
+      'Progress Value': 'value',
+      'Date': 'date',
+      'Note': 'note',
+      'Notes': 'note'
+    };
+
+    const controlName = controlNameMap[fieldName] || fieldName;
+    const control = this.form.get(controlName);
+
+    if (!control) {
+      return '';
+    }
+
+    if (control.hasError('required')) {
       return `${fieldName} is required`;
     }
-    if (control?.hasError('min')) {
+    if (control.hasError('min')) {
       return `${fieldName} must be 0 or greater`;
     }
-    if (control?.hasError('pattern')) {
+    if (control.hasError('pattern')) {
       return `${fieldName} must be a valid number`;
     }
-    if (control?.hasError('maxlength')) {
-      return `${fieldName} cannot exceed ${control.errors?.['maxlength'].requiredLength} characters`;
+    if (control.hasError('maxlength')) {
+      const maxLength = control.errors?.['maxlength'].requiredLength;
+      return `${fieldName} cannot exceed ${maxLength} characters`;
     }
     return '';
   }
