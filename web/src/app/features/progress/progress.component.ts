@@ -13,6 +13,7 @@ import { GoalsService } from '../../core/services/goals.service';
 import { ProgressService } from '../../core/services/progress.service';
 import { ProgressFormComponent } from './progress-form/progress-form.component';
 import { ProgressChartComponent } from './progress-chart/progress-chart.component';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-progress',
@@ -25,7 +26,8 @@ import { ProgressChartComponent } from './progress-chart/progress-chart.componen
     MatSelectModule,
     MatFormFieldModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ConfirmDialogComponent
   ],
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
@@ -110,10 +112,23 @@ export class ProgressComponent implements OnInit {
     });
   }
 
-  async deleteEntry(id: string): Promise<void> {
-    if (confirm('Are you sure you want to delete this entry?')) {
-      await this.progressService.deleteEntry(id);
-    }
+  deleteEntry(id: string): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Delete Progress Entry?',
+        message: 'This action cannot be undone.',
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        await this.progressService.deleteEntry(id);
+        this.progressService.loadProgress();
+      }
+    });
   }
 
   viewChart(): void {
