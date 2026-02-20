@@ -23,7 +23,8 @@ import { ZipImportService } from '../../core/services/zip-import.service';
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   template: `
     <div class="settings-container">
@@ -51,14 +52,20 @@ import { ZipImportService } from '../../core/services/zip-import.service';
         </mat-card-header>
         <mat-card-content>
           <div class="button-group">
-            <button mat-raised-button color="primary" (click)="exportAllData()">
+            <button mat-raised-button color="primary" (click)="exportAllData()" [disabled]="isImporting">
               <mat-icon>download</mat-icon>
               Export All Data (ZIP)
             </button>
-            <button mat-raised-button (click)="importData()">
-              <mat-icon>upload</mat-icon>
-              Import Data
+            <button mat-raised-button (click)="fileInput.click()" [disabled]="isImporting">
+              <mat-icon *ngIf="!isImporting">upload</mat-icon>
+              <mat-spinner *ngIf="isImporting" diameter="20" class="import-spinner"></mat-spinner>
+              {{ isImporting ? 'Importing...' : 'Import Data' }}
             </button>
+            <input #fileInput type="file" hidden accept=".zip,.json" (change)="onFileSelected($event)">
+          </div>
+
+          <div *ngIf="importError" class="import-error">
+            {{ importError }}
           </div>
 
           <div class="csv-buttons">
@@ -108,7 +115,22 @@ import { ZipImportService } from '../../core/services/zip-import.service';
         button {
           flex: 1;
           min-width: 150px;
+          position: relative;
         }
+
+        button[disabled] {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      .import-error {
+        color: #d32f2f;
+        background-color: #ffebee;
+        padding: 12px;
+        border-radius: 4px;
+        margin-top: 12px;
+        font-size: 14px;
       }
 
       .csv-buttons {
@@ -123,17 +145,27 @@ import { ZipImportService } from '../../core/services/zip-import.service';
           margin-bottom: 10px;
         }
       }
+
+      .import-spinner {
+        display: inline-block;
+        margin-right: 8px;
+      }
     }
   `]
 })
 export class SettingsComponent implements OnInit {
   themeMode: 'light' | 'dark' | 'system' = 'system';
+  isImporting = false;
+  importError: string | null = null;
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private settingsService: SettingsService,
     private csvExportService: CsvExportService,
     private csvImportService: CsvImportService,
     private zipExportService: ZipExportService,
+    private zipImportService: ZipImportService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -171,8 +203,70 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  importData(): void {
-    alert('Import functionality to be implemented');
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.importFile(file);
+    }
+    // Reset the input so the same file can be selected again
+    (event.target as HTMLInputElement).value = '';
+  }
+
+  private async importFile(file: File): Promise<void> {
+    try {
+      this.isImporting = true;
+      this.importError = null;
+
+      const result = await this.zipImportService.importFromFile(file);
+
+      if (!result.ok) {
+        this.importError = result.error || 'Import failed';
+        this.snackBar.open('✗ ' + (result.error || 'Import failed'), 'Close', {
+          duration: 5000,
+          horizontalPosition: 'end',
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar']
+        });
+        return;
+      }
+
+      const data = result.data;
+      const totalCount = (data?.goalsCount || 0) +
+        (data?.progressEntriesCount || 0) +
+        (data?.goalCategoriesCount || 0) +
+        (data?.dailyLogCategoriesCount || 0) +
+        (data?.dailyLogEntriesCount || 0) +
+        (data?.noteTagsCount || 0) +
+        (data?.notesCount || 0) +
+        (data?.appSettingsCount || 0);
+
+      const summary = [
+        data?.goalsCount && `${data.goalsCount} goal(s)`,
+        data?.progressEntriesCount && `${data.progressEntriesCount} progress entry(ies)`,
+        data?.goalCategoriesCount && `${data.goalCategoriesCount} category(ies)`,
+        data?.dailyLogEntriesCount && `${data.dailyLogEntriesCount} log entry(ies)`,
+        data?.notesCount && `${data.notesCount} note(s)`
+      ].filter(Boolean).join(', ');
+
+      this.snackBar.open(`✓ Data imported successfully (${totalCount} records: ${summary})`, 'Close', {
+        duration: 5000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['success-snackbar']
+      });
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      this.importError = errorMsg;
+      this.snackBar.open('✗ Import failed: ' + errorMsg, 'Close', {
+        duration: 5000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['error-snackbar']
+      });
+      console.error('Import error:', error);
+    } finally {
+      this.isImporting = false;
+    }
   }
 
   async exportGoalsCSV(): Promise<void> {
