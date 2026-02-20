@@ -98,6 +98,18 @@ export class ProgressComponent implements OnInit {
     });
   }
 
+  editEntry(entry: ProgressEntry): void {
+    this.dialog.open(ProgressFormComponent, {
+      width: '500px',
+      data: { entry, isEdit: true },
+      disableClose: false
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.progressService.loadProgress();
+      }
+    });
+  }
+
   async deleteEntry(id: string): Promise<void> {
     if (confirm('Are you sure you want to delete this entry?')) {
       await this.progressService.deleteEntry(id);

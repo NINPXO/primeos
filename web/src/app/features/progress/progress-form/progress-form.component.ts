@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,9 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { Goal } from '../../../core/models';
+import { Goal, ProgressEntry } from '../../../core/models';
 import { GoalsService } from '../../../core/services/goals.service';
 import { ProgressService } from '../../../core/services/progress.service';
 
@@ -36,23 +36,50 @@ export class ProgressFormComponent implements OnInit {
   private goalsService = inject(GoalsService);
   private progressService = inject(ProgressService);
   private dialogRef = inject(MatDialogRef<ProgressFormComponent>);
+  private dialogData = inject(MAT_DIALOG_DATA, { optional: true });
 
   form!: FormGroup;
   goals: Goal[] = [];
   isSubmitting: boolean = false;
+  isEditMode: boolean = false;
+  editingEntry?: ProgressEntry;
 
   ngOnInit(): void {
+    this.checkEditMode();
     this.initializeForm();
     this.loadGoals();
   }
 
+  private checkEditMode(): void {
+    if (this.dialogData?.isEdit && this.dialogData?.entry) {
+      this.isEditMode = true;
+      this.editingEntry = this.dialogData.entry;
+    }
+  }
+
   private initializeForm(): void {
     const today = new Date().toISOString().split('T')[0];
+    let initialValues = {
+      goalId: '',
+      value: '',
+      date: today,
+      note: ''
+    };
+
+    if (this.isEditMode && this.editingEntry) {
+      initialValues = {
+        goalId: this.editingEntry.goalId,
+        value: this.editingEntry.value.toString(),
+        date: this.editingEntry.date,
+        note: this.editingEntry.note || ''
+      };
+    }
+
     this.form = this.fb.group({
-      goalId: ['', Validators.required],
-      value: ['', [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d+)?$/)]],
-      date: [today, Validators.required],
-      note: ['', Validators.maxLength(200)]
+      goalId: [initialValues.goalId, Validators.required],
+      value: [initialValues.value, [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d+)?$/)]],
+      date: [initialValues.date, Validators.required],
+      note: [initialValues.note, Validators.maxLength(200)]
     });
   }
 
@@ -71,12 +98,18 @@ export class ProgressFormComponent implements OnInit {
     this.isSubmitting = true;
     try {
       const formValue = this.form.value;
-      await this.progressService.addEntry({
+      const entryData = {
         goalId: formValue.goalId,
         value: parseFloat(formValue.value),
         date: new Date(formValue.date).toISOString().split('T')[0],
         note: formValue.note || undefined
-      });
+      };
+
+      if (this.isEditMode && this.editingEntry) {
+        await this.progressService.updateEntry(this.editingEntry.id, entryData);
+      } else {
+        await this.progressService.addEntry(entryData);
+      }
 
       this.dialogRef.close(true);
     } catch (error) {

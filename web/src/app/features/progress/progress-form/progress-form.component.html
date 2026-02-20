@@ -1,5 +1,5 @@
 <div class="progress-form">
-  <h2 mat-dialog-title>Log Progress</h2>
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit Progress Entry' : 'Log Progress' }}</h2>
 
   <mat-dialog-content>
     <form [formGroup]="form">
@@ -50,7 +50,7 @@
       color="primary"
       (click)="onSubmit()"
       [disabled]="form.invalid || isSubmitting">
-      {{ isSubmitting ? 'Saving...' : 'Log Progress' }}
+      {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Update Entry' : 'Log Progress') }}
     </button>
   </mat-dialog-actions>
 </div>
