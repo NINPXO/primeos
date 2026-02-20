@@ -1,5 +1,5 @@
 .daily-log-container {
-  padding: 20px;
+  padding: 32px 24px;
   max-width: 900px;
   margin: 0 auto;
 
@@ -7,13 +7,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 24px;
-    gap: 20px;
+    margin-bottom: 32px;
+    gap: 24px;
 
     h1 {
       margin: 0;
-      font-size: 28px;
-      font-weight: 500;
+      font-size: 32px;
+      font-weight: 600;
       flex: 1;
       text-align: center;
     }
@@ -21,28 +21,28 @@
 
   .toolbar {
     display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 32px;
     flex-wrap: wrap;
   }
 
   .entries-container {
     .empty-message {
       text-align: center;
-      color: #999;
+      color: #999999;
       font-size: 16px;
-      padding: 40px 20px;
+      padding: 60px 24px;
     }
   }
 
   .category-section {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 
     .category-name {
       font-size: 18px;
-      font-weight: 500;
-      margin: 0 0 12px 0;
-      color: #333;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: #212121;
     }
 
     .entries-list {
@@ -53,25 +53,35 @@
   }
 
   .entry-card {
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    border: 1px solid #EEEEEE;
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    }
+
     mat-card-content {
-      padding: 12px;
+      padding: 16px;
       margin: 0;
 
       .entry-note {
         margin: 0 0 8px 0;
         font-size: 14px;
         line-height: 1.5;
+        color: #212121;
       }
 
       .entry-time {
         margin: 0;
         font-size: 12px;
-        color: #999;
+        color: #999999;
       }
     }
 
     mat-card-actions {
-      padding: 8px;
+      padding: 12px 0 0 0;
       display: flex;
       gap: 8px;
       justify-content: flex-end;
@@ -79,17 +89,18 @@
   }
 
   mat-divider {
-    margin: 24px 0;
+    margin: 32px 0;
+    border-top-color: #EEEEEE;
   }
 }
 
 @media (max-width: 600px) {
   .daily-log-container {
-    padding: 12px;
+    padding: 24px 16px;
 
     .header {
       h1 {
-        font-size: 20px;
+        font-size: 24px;
       }
     }
 

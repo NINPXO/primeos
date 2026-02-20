@@ -1,1 +1,294 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles - Stripe Sessions Design System */
+
+/* ========================================
+   SPACING SCALE (8px Grid System)
+   ======================================== */
+$spacing-8: 8px;
+$spacing-16: 16px;
+$spacing-24: 24px;
+$spacing-32: 32px;
+
+/* ========================================
+   COLOR PALETTE - Stripe Sessions Inspired
+   ======================================== */
+// Primary
+$color-primary: #1A73E8;
+$color-primary-hover: #1557B0;
+$color-primary-light: #E8F0FE;
+
+// Neutral Background
+$color-bg-white: #FFFFFF;
+$color-bg-light: #F8F9FA;
+$color-bg-gray: #F5F5F5;
+
+// Text
+$color-text-primary: #212121;
+$color-text-secondary: #666666;
+$color-text-tertiary: #999999;
+$color-text-disabled: #CCCCCC;
+
+// Borders
+$color-border-light: #EEEEEE;
+$color-border-standard: #E0E0E0;
+
+// Status Colors (Minimal Set)
+$color-success: #4CAF50;
+$color-warning: #FF9800;
+$color-error: #F44336;
+$color-info: #2196F3;
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+$font-family-primary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Line Heights
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-relaxed: 1.6;
+
+// Heading Sizes
+$h1-size: 32px;
+$h1-weight: $font-weight-semibold;
+$h1-line-height: $line-height-tight;
+
+$h2-size: 24px;
+$h2-weight: $font-weight-semibold;
+$h2-line-height: $line-height-tight;
+
+$h3-size: 16px;
+$h3-weight: $font-weight-semibold;
+$h3-line-height: $line-height-tight;
+
+// Body Sizes
+$body-large-size: 16px;
+$body-large-weight: $font-weight-regular;
+$body-large-line-height: $line-height-normal;
+
+$body-size: 14px;
+$body-weight: $font-weight-regular;
+$body-line-height: $line-height-normal;
+
+$body-small-size: 12px;
+$body-small-weight: $font-weight-regular;
+$body-small-line-height: $line-height-normal;
+
+/* ========================================
+   SHADOWS (Subtle Stripe Sessions Style)
+   ======================================== */
+$shadow-none: none;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+$shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.15);
+
+/* ========================================
+   BORDER RADIUS
+   ======================================== */
+$border-radius-sm: 2px;
+$border-radius-md: 4px;
+$border-radius-lg: 8px;
+
+/* ========================================
+   TRANSITIONS
+   ======================================== */
+$transition-fast: 150ms ease;
+$transition-normal: 200ms ease;
+$transition-slow: 300ms ease;
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-primary;
+  background-color: $color-bg-white;
+  color: $color-text-primary;
+}
+
+body {
+  line-height: $line-height-normal;
+  font-size: $body-size;
+  font-weight: $font-weight-regular;
+}
+
+/* ========================================
+   TYPOGRAPHY UTILITIES
+   ======================================== */
+h1, .h1 {
+  font-size: $h1-size;
+  font-weight: $h1-weight;
+  line-height: $h1-line-height;
+  margin: 0 0 $spacing-24 0;
+  color: $color-text-primary;
+}
+
+h2, .h2 {
+  font-size: $h2-size;
+  font-weight: $h2-weight;
+  line-height: $h2-line-height;
+  margin: 0 0 $spacing-16 0;
+  color: $color-text-primary;
+}
+
+h3, .h3 {
+  font-size: $h3-size;
+  font-weight: $h3-weight;
+  line-height: $h3-line-height;
+  margin: 0 0 $spacing-16 0;
+  color: $color-text-primary;
+}
+
+p {
+  margin: 0 0 $spacing-16 0;
+  color: $color-text-secondary;
+  line-height: $line-height-normal;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ========================================
+   SPACING UTILITIES
+   ======================================== */
+.spacing-8 { margin: $spacing-8; }
+.spacing-16 { margin: $spacing-16; }
+.spacing-24 { margin: $spacing-24; }
+.spacing-32 { margin: $spacing-32; }
+
+.padding-8 { padding: $spacing-8; }
+.padding-16 { padding: $spacing-16; }
+.padding-24 { padding: $spacing-24; }
+.padding-32 { padding: $spacing-32; }
+
+.gap-8 { gap: $spacing-8; }
+.gap-16 { gap: $spacing-16; }
+.gap-24 { gap: $spacing-24; }
+.gap-32 { gap: $spacing-32; }
+
+/* ========================================
+   CARD STYLING
+   ======================================== */
+mat-card {
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  border: 1px solid $color-border-light;
+  transition: all $transition-normal;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+/* ========================================
+   BUTTON STYLING
+   ======================================== */
+button, a.button {
+  font-family: $font-family-primary;
+  transition: all $transition-normal;
+  border-radius: $border-radius-md;
+}
+
+.mat-mdc-button, .mat-mdc-raised-button {
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ========================================
+   FORM STYLING
+   ======================================== */
+mat-form-field {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-form-field-hint-wrapper {
+    padding-top: $spacing-8;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+.text-primary {
+  color: $color-text-primary;
+}
+
+.text-secondary {
+  color: $color-text-secondary;
+}
+
+.text-tertiary {
+  color: $color-text-tertiary;
+}
+
+.bg-white {
+  background-color: $color-bg-white;
+}
+
+.bg-light {
+  background-color: $color-bg-light;
+}
+
+.bg-gray {
+  background-color: $color-bg-gray;
+}
+
+.border-light {
+  border: 1px solid $color-border-light;
+}
+
+.shadow-sm {
+  box-shadow: $shadow-sm;
+}
+
+.shadow-md {
+  box-shadow: $shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: $shadow-lg;
+}
+
+.rounded-md {
+  border-radius: $border-radius-md;
+}
+
+.rounded-lg {
+  border-radius: $border-radius-lg;
+}
+
+/* ========================================
+   SCROLLBAR STYLING
+   ======================================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-light;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border-standard;
+  border-radius: $border-radius-md;
+
+  &:hover {
+    background: $color-text-tertiary;
+  }
+}

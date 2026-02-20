@@ -1,5 +1,5 @@
 .goals-container {
-  padding: 20px;
+  padding: 32px 24px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -8,13 +8,13 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   border-radius: 4px;
 
   h1 {
     margin: 0;
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 32px;
+    font-weight: 600;
   }
 
   .spacer {
@@ -23,7 +23,7 @@
 }
 
 .filters {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   display: flex;
   gap: 16px;
 
@@ -34,16 +34,16 @@
 
 .goals-list {
   .category-section {
-    margin-bottom: 40px;
+    margin-bottom: 48px;
 
     .category-title {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 0 0 16px 0;
+      margin: 0 0 24px 0;
       font-size: 18px;
       font-weight: 600;
-      color: rgba(0, 0, 0, 0.87);
+      color: #212121;
 
       .color-indicator {
         width: 12px;
@@ -56,18 +56,21 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
 
       .goal-card {
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        border: 1px solid #EEEEEE;
 
         &:hover {
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-          transform: translateY(-4px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+          transform: translateY(-2px);
         }
 
         &.completed {
-          opacity: 0.7;
+          opacity: 0.6;
 
           mat-card-title {
             text-decoration: line-through;
@@ -75,18 +78,21 @@
         }
 
         &.on-hold {
-          border-left: 4px solid #ff9800;
+          border-left: 4px solid #FF9800;
         }
 
         mat-card-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 12px;
+          margin-bottom: 16px;
+          padding: 0;
 
           mat-card-title {
             margin: 0;
             flex: 1;
+            font-weight: 600;
+            color: #212121;
           }
 
           mat-chip-set {
@@ -98,34 +104,35 @@
             height: 24px;
 
             &.active {
-              background-color: #4caf50;
+              background-color: #4CAF50;
               color: white;
             }
 
             &.completed {
-              background-color: #2196f3;
+              background-color: #1A73E8;
               color: white;
             }
 
             &.on-hold {
-              background-color: #ff9800;
+              background-color: #FF9800;
               color: white;
             }
           }
         }
 
         mat-card-content {
-          margin-bottom: 12px;
+          margin-bottom: 16px;
+          padding: 0;
 
           p {
             margin: 0 0 8px 0;
-            color: rgba(0, 0, 0, 0.6);
+            color: #666666;
             font-size: 14px;
             line-height: 1.5;
           }
 
           .date {
-            color: rgba(0, 0, 0, 0.5);
+            color: #999999;
             font-size: 12px;
           }
         }
@@ -133,16 +140,16 @@
         mat-card-actions {
           display: flex;
           justify-content: flex-end;
-          padding: 8px 0 0 0;
-          border-top: 1px solid #eee;
+          padding: 12px 0 0 0;
+          border-top: 1px solid #EEEEEE;
         }
       }
     }
 
     .empty-state {
       text-align: center;
-      padding: 40px 20px;
-      color: rgba(0, 0, 0, 0.4);
+      padding: 48px 24px;
+      color: #999999;
 
       mat-icon {
         font-size: 48px;
@@ -159,8 +166,8 @@
 
   .empty-container {
     text-align: center;
-    padding: 80px 20px;
-    color: rgba(0, 0, 0, 0.4);
+    padding: 80px 24px;
+    color: #999999;
 
     mat-icon {
       font-size: 64px;
