@@ -98,7 +98,20 @@
       "Bash(/tmp/agent_d_verification.md:*)",
       "Bash(timeout 10 ps:*)",
       "Bash(/tmp/task_system_summary.txt:*)",
-      "Bash(/tmp/final_summary.txt:*)"
+      "Bash(/tmp/final_summary.txt:*)",
+      "Bash(tee:*)",
+      "Bash(bash C:/ClodueSpace/PrimeOS/install.sh)",
+      "Bash(git -C C:/ClodueSpace/PrimeOS status)",
+      "Bash(git -C C:/ClodueSpace/PrimeOS add web/package.json web/package-lock.json web/src/)",
+      "Bash(git -C C:/ClodueSpace/PrimeOS commit -m \"fix: Resolve package.json version compatibility and Angular compilation errors\n\n- Update ngx-quill from 23.1.0 to 25.2.0 \\(resolves ETARGET npm error\\)\n- Fix Dexie query filters by removing .where\\(\\).equals\\(\\) on boolean fields\n- Replace destructuring in *ngFor template with array indexing\n- Fix async function return types \\(void -> Promise<void>\\)\n- Add non-null assertion \\(!\\) to @Inject\\(MAT_DIALOG_DATA\\) properties\n- Replace unsupported MatBottomNavigationModule with nav buttons\n- Fix Observable.asObservable\\(\\) redundant calls\n- Update note editor to handle ContentChange event properly\n- Replace mat-chip [selected] with [highlighted] for Material compatibility\n- Fix onEditorChange to accept ContentChange event object\n- Add missing MatTooltipModule import to app-shell component\n\nAll changes allow npm install to succeed and Angular app to compile successfully.\")",
+      "Bash(netstat:*)",
+      "Bash(npx ng build)",
+      "Bash(npx ng serve:*)",
+      "Bash(npx tsc:*)",
+      "Bash(command -v:*)",
+      "Bash(npx:*)",
+      "Bash(pkill:*)",
+      "Bash(bash -c 'cd /c/ClodueSpace/PrimeOS && ls -la')"
     ]
   }
 }
