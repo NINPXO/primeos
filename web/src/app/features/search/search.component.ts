@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +26,7 @@ import { SearchResult } from '../../core/models';
 
       <div class="results">
         <mat-list *ngIf="results.length > 0">
-          <mat-list-item *ngFor="let result of results">
+          <mat-list-item *ngFor="let result of results" (click)="navigateToResult(result)">
             <mat-icon matListItemIcon>
               {{ getIcon(result.type) }}
             </mat-icon>
@@ -63,7 +64,7 @@ export class SearchComponent implements OnInit {
   searchQuery: string = '';
   results: SearchResult[] = [];
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -88,5 +89,9 @@ export class SearchComponent implements OnInit {
       default:
         return 'help';
     }
+  }
+
+  navigateToResult(result: SearchResult): void {
+    this.router.navigate([result.path]);
   }
 }
